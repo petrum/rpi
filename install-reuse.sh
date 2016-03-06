@@ -1,7 +1,12 @@
 #!/bin/bash
 
 trap "exit 1" TERM
-export TOP_PID=$$
+
+function abort
+{
+    kill -s TERM $$
+    exit 0
+}
 
 function selectMicroSD()
 {
@@ -9,7 +14,7 @@ function selectMicroSD()
     local USB_READER=$(lsblk -Sm | grep -i card | grep usb | cut -f1 -d' ')
     if [[ "$USB_READER" == '' ]]; then
         echo "No USB reader found! Exiting..." 1>&2
-        kill -s TERM $TOP_PID
+        abort
     fi
 
     echo "Using '$USB_READER'... Please confirm: [y/N]" 1>&2
@@ -18,7 +23,7 @@ function selectMicroSD()
 
     if [[ "$ANSWER" != "y" ]]; then
         echo "Exiting now..." 1>&2
-        kill -s TERM $TOP_PID
+        abort
     fi
 
     if grep -qs "/dev/${USB_READER}1" /proc/mounts; then
