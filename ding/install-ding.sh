@@ -10,8 +10,6 @@ sethostname dinger $DEST
 pigpioInstall $DEST/home/pi/pigpio $DEST/home/pi/setup.sh
 get-rpi ~/github/rpi $DEST
 cat <<EOF >> $DEST/home/pi/setup.sh
-cd
-sudo cp git/rpi/motion/cfg/etc/rc.local /etc/rc.local
 sudo reboot
 EOF
 cat $DEST/home/pi/setup.sh
