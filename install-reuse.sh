@@ -113,7 +113,7 @@ EOF
 function get-rpi()
 {
     mkdir -p $2/home/pi/git/rpi
-    rsync --recursive $1 $2/home/pi/git/rpi  
+    rsync --recursive $1 $2/home/pi/git 
 }
 
 function sethostname()
