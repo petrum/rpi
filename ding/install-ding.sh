@@ -8,7 +8,7 @@ aptget $DEST
 networkSetup ~/github/rpi/net $DEST
 sethostname dinger $DEST
 pigpioInstall $DEST/home/pi/pigpio $DEST/home/pi/setup.sh
-get-rpi /home/petrum/rpi/motion $DEST
+get-rpi ~/github/rpi $DEST
 cat <<EOF >> $DEST/home/pi/setup.sh
 cd
 sudo cp git/rpi/motion/cfg/etc/rc.local /etc/rc.local
