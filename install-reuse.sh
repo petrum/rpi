@@ -81,7 +81,7 @@ function umountFS()
 
 function pigpioInstall()
 {
-    rm -fr $1
+    sudo rm -fr $1
     git clone https://github.com/joan2937/pigpio $1
     cat << EOF >> $2
 cd pigpio
