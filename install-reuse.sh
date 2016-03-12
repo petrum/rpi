@@ -95,7 +95,7 @@ function networkSetup()
     sudo cp -v $2/usr/share/zoneinfo/America/New_York $2/etc/localtime
     sudo cp -v $1/interfaces $2/etc/network
     sudo cp -v $1/rc.local $2/etc
-    sudo cp -v $1/wpa_supplicant.conf $2/etc/wpa_supplicant
+    sudo cp -v ~/wpa_supplicant.conf $2/etc/wpa_supplicant
     ls -l $2/etc/network/interfaces $2/etc/rc.local $2/etc/wpa_supplicant/wpa_supplicant.conf
     rm -fr $2/home/pi/.ssh
     mkdir $2/home/pi/.ssh

@@ -5,8 +5,7 @@ diskcopy /home/petrum/Downloads/2015-11-21-raspbian-jessie.img $READER
 expandFS $READER
 DEST=$(mountFS $READER)
 aptget $DEST
-#SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/rpi-zero
-#networkSetup $SRC $DEST
+networkSetup ~/github/rpi/net $DEST
 sethostname dinger $DEST
 pigpioInstall $DEST/home/pi/pigpio $DEST/home/pi/setup.sh
 get-rpi /home/petrum/rpi/motion $DEST
