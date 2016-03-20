@@ -13,8 +13,8 @@ pir_pin = 27
 #https://www.parallax.com/sites/default/files/downloads/555-28027-PIR-Sensor-Product-Guide-v2.3.pdf
 
 ## Raspberry Pi 2 Model B (J8 header)
-# 3.3 VDC o    o 2 5.0 VDC (Power)
-#         o    o 4 5.0 VDC  <===== VCC
+#+3.3 VDC o    o 2 +5.0 VDC (Power)
+#         o    o 4 +5.0 VDC  <===== VCC
 #         o    o 6 Ground   <===== GND
 #         o    o 8
 #         o    o 10
