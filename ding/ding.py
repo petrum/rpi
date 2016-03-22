@@ -45,6 +45,7 @@ def ding(bits):
             micro_sleep(600)
         pi.write(data, 0)
         #print i, b
+
 start = time.time() * 1000000
 for i in range(10):
     micro_sleep(1000 * 20)
