@@ -30,6 +30,7 @@ def micro_sleep(microsec):
             return
 
 def set(d, b):
+    GPIO.output(d, False)
     if b == '0':
         micro_sleep(700)
         GPIO.output(d, True)
