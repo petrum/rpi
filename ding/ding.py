@@ -21,6 +21,16 @@ data = 17
 #         o    o 18 GPIO 24 
 #         o    o
 
+s = time.time() * 1000000
+pi.write(d, 0)
+print time.time() * 1000000 - s
+
+s = time.time() * 1000000
+pi.write(d, 1)
+print time.time() * 1000000 - s
+
+sys.exit(0)
+
 def micro_sleep(microsec):
     m = 1000000
     end = time.time() * m + microsec
@@ -31,20 +41,22 @@ def micro_sleep(microsec):
             print microsec, count
             return
 
+def set(d, b):
+    micro_sleep(400)
+    if b == '0':
+        micro_sleep(300)
+        pi.write(d, 1)
+        micro_sleep(300)
+    else:
+        pi.write(d, 1)
+        micro_sleep(600)
+    pi.write(d, 0)
+     
+
 def ding(bits):
     #print 'There are', len(bits), "bits"	
     for i, b in enumerate(bits):
-        pi.write(data, 0)
-        if b == '0':
-            micro_sleep(700)
-            pi.write(data, 1)
-            micro_sleep(300)
-        else:
-            micro_sleep(400)
-            pi.write(data, 1)
-            micro_sleep(600)
-        pi.write(data, 0)
-        #print i, b
+        set(data, b)
 
 start = time.time() * 1000000
 for i in range(10):
