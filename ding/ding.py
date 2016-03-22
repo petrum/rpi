@@ -15,6 +15,7 @@ import RPi.GPIO as GPIO
 #            o    o 18 GPIO 24 
 #            o    o
 
+GPIO.cleanup()
 data = 11
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(data, GPIO.OUT)
