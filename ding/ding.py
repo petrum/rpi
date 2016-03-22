@@ -22,11 +22,11 @@ data = 17
 #         o    o
 
 s = time.time() * 1000000
-pi.write(d, 0)
+pi.write(data, 0)
 print time.time() * 1000000 - s
 
 s = time.time() * 1000000
-pi.write(d, 1)
+pi.write(data, 1)
 print time.time() * 1000000 - s
 
 sys.exit(0)
