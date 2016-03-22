@@ -26,7 +26,7 @@ def micro_sleep(microsec):
     while True:
         count += 1
         if time.time() * m >= end:
-            print microsec, count
+            #print microsec, count
             return
 
 def set(d, b):
