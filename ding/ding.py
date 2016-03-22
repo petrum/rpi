@@ -15,8 +15,8 @@ import RPi.GPIO as GPIO
 #            o    o 18 GPIO 24 
 #            o    o
 
-data = 11
-GPIO.setmode(GPIO.BOARD)
+data = 17
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(data, GPIO.OUT)
 
 def micro_sleep(microsec):
