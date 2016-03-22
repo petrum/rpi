@@ -21,10 +21,11 @@ data = 17
 #         o    o 18 GPIO 24 
 #         o    o
 
-def micro_sleep(microsec):    
-    end = time.time() * 1000000 + microsec
+def micro_sleep(microsec):
+    m = 1000000
+    end = time.time() * m + microsec
     while True:
-        if time.time() * 1000000 >= end:
+        if time.time() * m >= end:
             return
 
 def ding(bits):
