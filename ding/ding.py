@@ -28,8 +28,8 @@ def micro_sleep(microsec):
     while True:
         count += 1
         if time.time() * m >= end:
+            print microsec, count
             return
-    print microsec, count
 
 def ding(bits):
     #print 'There are', len(bits), "bits"	
