@@ -2,7 +2,8 @@
 . "$(dirname $0)/../install-reuse.sh"
 READER=$(selectMicroSD)
 #diskcopy /home/petrum/Downloads/2015-11-21-raspbian-jessie.img $READER
-diskcopy /home/petrum/Downloads/2016-02-26-raspbian-jessie-lite.img $READER
+#diskcopy /home/petrum/Downloads/2016-02-26-raspbian-jessie-lite.img $READER
+diskcopy /home/petrum/Downloads/2016-03-18-raspbian-jessie-lite.img $READER
 expandFS $READER
 DEST=$(mountFS $READER)
 aptget $DEST
