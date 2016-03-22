@@ -24,9 +24,12 @@ data = 17
 def micro_sleep(microsec):
     m = 1000000
     end = time.time() * m + microsec
+    count = 0
     while True:
+        count++
         if time.time() * m >= end:
             return
+    print microsec, count
 
 def ding(bits):
     #print 'There are', len(bits), "bits"	
