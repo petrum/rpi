@@ -65,10 +65,11 @@ w" | sudo fdisk /dev/$1
 
 function mountFS()
 {
-    local TMP=~/tmp/$$
-    mkdir -p $TMP
-    #echo $DEST 1>&2
-    sudo mount "/dev/${1}2" "$TMP"
+    local TMP=~/tmp/$$-$2
+    mkdir -p "$TMP"
+    PART="/dev/${1}$2"
+    echo "Mounting '$PART' into '$TMP'" 1>&2
+    sudo mount "/dev/${1}$2" "$TMP"
     echo $TMP
 }
 
@@ -76,6 +77,7 @@ function umountFS()
 {
     sudo umount "$1"
     rm -r "$1"
+    echo "Unmounted and removed '$1'" 1>&2
     sync
 }
 
@@ -84,7 +86,6 @@ function networkSetup()
     sudo cp -v $2/usr/share/zoneinfo/America/New_York $2/etc/localtime
     sudo cp -v $1/interfaces $2/etc/network
     sudo cp -v ~/wpa_supplicant.conf $2/etc/wpa_supplicant
-    ls -l $2/etc/network/interfaces $2/etc/wpa_supplicant/wpa_supplicant.conf
 
     rm -fr $2/home/pi/.ssh
     mkdir $2/home/pi/.ssh
@@ -108,9 +109,9 @@ function static_ip()
 {
     IP=$1
     DHCP="$2/etc/dhcpcd.conf"
-    cp $DHCP "$DHCP.orig"
-    echo 'interface wlan0' >> $DHCP
-    echo "static ip_address=$IP/24" >> $DHCP
+    sudo cp -v $DHCP "$DHCP.orig"
+    echo 'interface wlan0' | sudo tee -a $DHCP
+    echo "static ip_address=$IP/24" | sudo tee -a $DHCP
 }
 
 function enable_spi()
@@ -120,6 +121,7 @@ function enable_spi()
 
 function get_MAX7219array()
 {
+    rm -fr $1/home/pi/MAX7219array
     git clone https://github.com/JonA1961/MAX7219array.git $1/home/pi/MAX7219array
     sed -i 's/NUM_MATRICES = 8/NUM_MATRICES = 7/g' $1/home/pi/MAX7219array/MAX7219array.py
 }
@@ -127,6 +129,6 @@ function get_MAX7219array()
 function autostart_MAX7219array_demo()
 {
     chmod a+x $1/home/pi/MAX7219array/MAX7219array_demo.py    
-    sed -i 's|^exit 0|cd /home/pi/MAX7219array; ./MAX7219array_demo.py\nexit 0|g' $1/etc/rc.local
+    sudo sed -i 's|^exit 0|cd /home/pi/MAX7219array; ./MAX7219array_demo.py\nexit 0|g' $1/etc/rc.local
 }
 
