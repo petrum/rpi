@@ -1,28 +1,28 @@
 #!/usr/bin/python
 
 import time
-import pigpio
 import datetime
 import os
-from time import sleep
-
-pi = pigpio.pi()
-pir_pin = 27
+import RPi.GPIO as GPIO
 
 #PIR Sensor(#555-28027)
 #https://www.parallax.com/sites/default/files/downloads/555-28027-PIR-Sensor-Product-Guide-v2.3.pdf
 
 ## Raspberry Pi 2 Model B (J8 header)
-#+3.3 VDC o    o 2 +5.0 VDC (Power)
-#         o    o 4 +5.0 VDC  <===== VCC
-#         o    o 6 Ground   <===== GND
-#         o    o 8
-#         o    o 10
-#         o    o 12
-#         o    o 14
-#         o    o 16 GPIO 23  <==== Out
-#         o    o 18 GPIO 24 
-#         o    o
+# 3.3 VDC 1  o    o 2 5.0 VDC (Power) <======
+#         3  o    o 4 5.0 VDC
+#         5  o    o 6 Ground
+#         7  o    o 8
+# GND     9  o    o 10
+# GEN017 11  o    o 12
+# GEN027 13  o    o 14
+#            o    o 16 GPIO 23 
+#            o    o 18 GPIO 24 
+#            o    o
+
+GPIO.setmode(GPIO.BCM)
+pir = 27
+GPIO.setup(pir, GPIO.IN)
 
 def alarm():
     ts = time.time()
@@ -35,6 +35,8 @@ def alarm():
 
 last = 0
 while True:
-    if pi.read(pir_pin):
+    if GPIO.input(pir):
         alarm()
-    time.sleep(1)
+
+GPIO.cleanup()
+
