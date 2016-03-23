@@ -6,7 +6,7 @@ expandFS $READER
 DEST=$(mountFS $READER 2)
 networkSetup ~/github/rpi/net $DEST
 sethostname motion $DEST
-get-rpi ~/github/rpi $DEST
+get_rpi $DEST
 SETUP=$DEST/home/pi/setup.sh
 cat << EOF > $SETUP
 sudo apt-get install tmux vim -y

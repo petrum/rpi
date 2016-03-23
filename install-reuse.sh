@@ -92,10 +92,12 @@ function networkSetup()
     cat ~/.ssh/id_rsa.pub >> $2/home/pi/.ssh/authorized_keys
 }
 
-function get-rpi()
+function get_rpi()
 {
-    mkdir -p $2/home/pi/git/rpi
-    rsync --recursive $1 $2/home/pi/git 
+    RPI="$1/home/pi/git/rpi"
+    rm -fr $RPI
+    mkdir -p $RPI
+    git clone https://github.com/petrum/rpi.git $RPI
 }
 
 function sethostname()

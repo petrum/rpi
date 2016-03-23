@@ -7,6 +7,6 @@ DEST=$(mountFS $READER 2)
 networkSetup ~/github/rpi/net $DEST
 static_ip '192.168.1.8' $DEST
 sethostname dinger $DEST
-get-rpi ~/github/rpi $DEST
+get_rpi $DEST
 umountFS $DEST
 

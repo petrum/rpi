@@ -9,7 +9,7 @@ umountFS $BOOT
 DEST=$(mountFS $READER 2)
 networkSetup ~/github/rpi/net $DEST
 sethostname weather $DEST
-get-rpi ~/github/rpi $DEST
+get_rpi $DEST
 get_MAX7219array $DEST
 autostart_MAX7219array_demo $DEST
 umountFS $DEST
