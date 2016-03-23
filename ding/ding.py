@@ -37,7 +37,7 @@ def set(d, b):
         micro_sleep(300)
     else:
         micro_sleep(400)
-        GPIO.output(d, False)
+        GPIO.output(d, True)
         micro_sleep(600)
     GPIO.output(d, False)
 
