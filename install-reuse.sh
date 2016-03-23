@@ -113,3 +113,20 @@ function static_ip()
     echo "static ip_address=$IP/24" >> $DHCP
 }
 
+function enable_spi()
+{
+    sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $1/config.txt
+}
+
+function get_MAX7219array()
+{
+    git clone https://github.com/JonA1961/MAX7219array.git $1/home/pi/MAX7219array
+    sed -i 's/NUM_MATRICES = 8/NUM_MATRICES = 7/g' $1/home/pi/MAX7219array/MAX7219array.py
+}
+
+function autostart_MAX7219array_demo()
+{
+    chmod a+x $1/home/pi/MAX7219array/MAX7219array_demo.py    
+    sed -i 's|^exit 0|cd /home/pi/MAX7219array; ./MAX7219array_demo.py\nexit 0|g' $1/etc/rc.local
+}
+
