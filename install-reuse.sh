@@ -65,49 +65,30 @@ w" | sudo fdisk /dev/$1
 
 function mountFS()
 {
-    local DEST=~/tmp/$$
-    mkdir -p $DEST
+    local TMP=~/tmp/$$
+    mkdir -p $TMP
     #echo $DEST 1>&2
-    sudo mount "/dev/${1}2" "$DEST"
-    echo $DEST
+    sudo mount "/dev/${1}2" "$TMP"
+    echo $TMP
 }
 
 function umountFS()
 {
-    sudo umount "$DEST"
-    rm -r "$DEST"
+    sudo umount "$1"
+    rm -r "$1"
     sync
-}
-
-function pigpioInstall()
-{
-    sudo rm -fr $1
-    git clone https://github.com/joan2937/pigpio $1
-    cat << EOF >> $2
-cd pigpio
-make
-sudo make install
-EOF
 }
 
 function networkSetup()
 {
     sudo cp -v $2/usr/share/zoneinfo/America/New_York $2/etc/localtime
     sudo cp -v $1/interfaces $2/etc/network
-    sudo cp -v $1/rc.local $2/etc
     sudo cp -v ~/wpa_supplicant.conf $2/etc/wpa_supplicant
-    ls -l $2/etc/network/interfaces $2/etc/rc.local $2/etc/wpa_supplicant/wpa_supplicant.conf
+    ls -l $2/etc/network/interfaces $2/etc/wpa_supplicant/wpa_supplicant.conf
+
     rm -fr $2/home/pi/.ssh
     mkdir $2/home/pi/.ssh
     cat ~/.ssh/id_rsa.pub >> $2/home/pi/.ssh/authorized_keys
-}
-
-function aptget()
-{
-    cat << EOF > $1/home/pi/setup.sh
-sudo apt-get install tmux vim -y
-EOF
-    chmod a+x $1/home/pi/setup.sh
 }
 
 function get-rpi()
@@ -118,6 +99,17 @@ function get-rpi()
 
 function sethostname()
 {
-    sudo sed -i "s/raspberrypi/$1/g" $2/etc/hosts
-    sudo sed -i "s/raspberrypi/$1/g" $2/etc/hostname
+    NAME=$(date +"$1-%Y%m%d-%H%M%S")
+    sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hosts
+    sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hostname
 }
+
+function static_ip()
+{
+    IP=$1
+    DHCP="$2/etc/dhcpcd.conf"
+    cp $DHCP "$DHCP.orig"
+    echo 'interface wlan0' >> $DHCP
+    echo "static ip_address=$IP/24" >> $DHCP
+}
+
