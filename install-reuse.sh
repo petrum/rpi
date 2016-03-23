@@ -134,3 +134,4 @@ function autostart_MAX7219array_demo()
     sudo sed -i 's|^exit 0|cd /home/pi/MAX7219array; ./MAX7219array_demo.py\nexit 0|g' $1/etc/rc.local
 }
 
+
