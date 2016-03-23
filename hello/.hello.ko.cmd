@@ -1,1 +1,0 @@
-cmd_/home/petrum/github/rpi/hello/hello.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/petrum/github/rpi/hello/hello.ko /home/petrum/github/rpi/hello/hello.o /home/petrum/github/rpi/hello/hello.mod.o
