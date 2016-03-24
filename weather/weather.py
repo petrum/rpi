@@ -3,6 +3,7 @@
 import urllib.request, urllib.parse, urllib.error
 from xml.dom.minidom import parse
 import time
+import sys
 
 WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
@@ -44,23 +45,25 @@ def get_weather(zipCode, days, metric):
     }
     return d
 
-def print_weather(w): 
+def format_weather(w): 
     units = w['units']
-    print("Current conditions as of {7}\n{1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
-        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset'], w['when']))
-    print("Forecast:")
+    ret = ''
+    ret += "Current conditions as of {7}\n{1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}\n".format(
+        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset'], w['when'])
+    ret += "Forecast:\n"
     for f in w['forecasts']:
-        print('{0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
+        ret += '{0}: {1} low = {2}{4}, high = {3}{4}\n'.format(f['day'], f['condition'], f['low'], f['high'], units)
+    return ret
 
 def get_weather_forever():
     try:
         w = get_weather(10583, 5, False)
-        print_weather(w)
+        print(format_weather(w))
     except Exception as e:
         print("Error:", repr(e))
     time.sleep(5)
 
 #get_weather_forever()
 w = get_weather(10583, 5, False)
-print_weather(w)
+sys.stdout.write(format_weather(w))
                  
