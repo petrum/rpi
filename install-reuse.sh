@@ -126,6 +126,11 @@ function get_MAX7219array()
     rm -fr $1/home/pi/MAX7219array
     git clone https://github.com/JonA1961/MAX7219array.git $1/home/pi/MAX7219array
     sed -i 's/NUM_MATRICES = 8/NUM_MATRICES = 7/g' $1/home/pi/MAX7219array/MAX7219array.py
+    cat << EOF >> $1/home/pi/setup.sh
+sudo apt-get install build-essential python-dev python-pip
+sudo pip install spidev
+EOF
+    chmod a+x $1/home/pi/setup.sh
 }
 
 function autostart_MAX7219array_demo()
