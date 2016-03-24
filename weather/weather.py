@@ -2,6 +2,7 @@
 
 import urllib.request, urllib.parse, urllib.error
 from xml.dom.minidom import parse
+import time
 
 WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
@@ -54,5 +55,6 @@ while True:
     try:
         w = get_weather(10583, 5, False)
         print_weather(w)
-    except Exception, e:
-        print("Error:", str(e))
+    except Exception as e:
+        print("Error:", repr(e))
+    time.sleep(5)
