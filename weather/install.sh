@@ -12,6 +12,6 @@ networkSetup ~/github/rpi/net $DEST
 sethostname weather $DEST
 get_rpi $DEST
 get_MAX7219array $DEST
-autostart_MAX7219array_demo $DEST
+#autostart_MAX7219array_demo $DEST
+sudo sed -i 's|^exit 0|cd /home/pi/git/rpi/weather; ./weather.sh\nexit 0|g' $1/etc/rc.local
 umountFS $DEST
-
