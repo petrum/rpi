@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+from __future__ import print_function
 
-import urllib.request, urllib.parse, urllib.error
+from urllib2 import urlopen
 from xml.dom.minidom import parse
 import time
 import sys
@@ -9,8 +10,7 @@ import MAX7219array as m7219
 from MAX7219fonts import CP437_FONT, SINCLAIRS_FONT, LCD_FONT, TINY_FONT
 from MAX7219array import DIR_L, DIR_R, DIR_U, DIR_D
 
-
-WEATHER_URL = 'htstp://xml.weather.yahoo.com/forecastrss?p=%s'
+WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
 WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
 
@@ -19,7 +19,7 @@ def get_weather(zipCode, days, metric):
     if metric:
         url = url + METRIC_PARAMETER
     #print(url)
-    dom = parse(urllib.request.urlopen(url))
+    dom = parse(urlopen(url))
     forecasts = []
     for i, node in enumerate(dom.getElementsByTagNameNS(WEATHER_NS, 'forecast')):
         if i >= days:
@@ -79,7 +79,7 @@ def get_weather_forever():
                 f.close()        
         time.sleep(1)
 
-def display(s):
+def display(s):    
     m7219.init()
     m7219.brightness(7)
     for line in s:
