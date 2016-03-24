@@ -5,6 +5,11 @@ from xml.dom.minidom import parse
 import time
 import sys
 
+import MAX7219array as m7219
+from MAX7219fonts import CP437_FONT, SINCLAIRS_FONT, LCD_FONT, TINY_FONT
+from MAX7219array import DIR_L, DIR_R, DIR_U, DIR_D
+
+
 WEATHER_URL = 'htstp://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
 WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
@@ -75,8 +80,12 @@ def get_weather_forever():
         time.sleep(10)
 
 def display(s):
+    m7219.init()
+    m7219.brightness(7)
     for line in s:
-        print(line)
+        m7219.scroll_message_horiz(line, 1, 5.5, DIR_L, CP437_FONT)
+        #print(line)
+    m7219.clear_all()
 
 get_weather_forever()
 #w = get_weather(10583, 5, False)
