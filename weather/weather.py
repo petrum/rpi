@@ -43,7 +43,7 @@ def get_weather(zipCode, days, metric):
 
 def print_weather(w): 
     units = w['units']
-    print("Current conditions: {0}, {1}{2} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
+    print("Current conditions: {1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
         w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset']))
     print("Forecast")
     for f in w['forecasts']:
