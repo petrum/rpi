@@ -77,7 +77,7 @@ def get_weather_forever():
             with open(fName, 'r') as f:
                 display(f.read().splitlines())
                 f.close()        
-        time.sleep(10)
+        time.sleep(1)
 
 def display(s):
     m7219.init()
