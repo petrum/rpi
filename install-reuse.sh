@@ -84,7 +84,7 @@ function umountFS()
 function networkSetup()
 {
     sudo cp -v $2/usr/share/zoneinfo/America/New_York $2/etc/localtime
-    sudo cp -v $1/interfaces $2/etc/network
+    sudo cp -v $2/home/pi/git/rpi/net/interfaces $2/etc/network
     sudo cp -v ~/rpi-private/wpa_supplicant.conf $2/etc/wpa_supplicant
 
     rm -fr $2/home/pi/.ssh
@@ -98,6 +98,7 @@ function get_rpi()
     rm -fr $RPI
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
+    networkSetup $1
 }
 
 function sethostname()
