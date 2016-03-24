@@ -9,11 +9,6 @@ networkSetup ~/github/rpi/net $DEST
 sethostname motion $DEST
 get_rpi $DEST
 sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/motion.py > /tmp/motion.log 2>\&1\nexit 0|g' $1/etc/rc.local
-SETUP=$DEST/home/pi/setup.sh
-cat << EOF > $SETUP
-echo | ssh-keygen -t rsa -N ''
-ssh-copy-id petrum@192.168.1.5
-EOF
-chmod a+x $SETUP
-cat $SETUP
+sudo mkdir $DEST/root/.ssh
+sudo cp /home/petrum/rpi-private/id_rsa $DEST/root/.ssh
 umountFS $DEST
