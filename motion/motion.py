@@ -4,6 +4,7 @@ import time
 import datetime
 import os
 import RPi.GPIO as GPIO
+import socket
 
 #PIR Sensor(#555-28027)
 #https://www.parallax.com/sites/default/files/downloads/555-28027-PIR-Sensor-Product-Guide-v2.3.pdf
@@ -30,7 +31,7 @@ def alarm():
     if ts - last > 30:
         last = ts
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-        result = os.system("echo PIR motion detection at " + st + " | ssh petrum@192.168.1.5 mail -s 'motion detected' petru.marginean@gmail.com")
+        result = os.system("echo PIR motion detection at " + st + " | ssh petrum@192.168.1.5 mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
         print(st, "PIR ALARM!")
 
 last = 0
