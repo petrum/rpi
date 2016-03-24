@@ -29,9 +29,11 @@ def get_weather(zipCode, days, metric):
     units = dom.getElementsByTagNameNS(WEATHER_NS, 'units')[0]
     location = dom.getElementsByTagNameNS(WEATHER_NS, 'location')[0]
     condition = dom.getElementsByTagNameNS(WEATHER_NS, 'condition')[0]
-    astronomy = dom.getElementsByTagNameNS(WEATHER_NS, 'astronomy')[0]     
+    astronomy = dom.getElementsByTagNameNS(WEATHER_NS, 'astronomy')[0]
+
     d = {
         'condition': condition.getAttribute('text'),
+        'when': condition.getAttribute('date'),
         'temp': condition.getAttribute('temp'),
         'forecasts': forecasts,
         'units': units.getAttribute('temperature'),
@@ -44,17 +46,21 @@ def get_weather(zipCode, days, metric):
 
 def print_weather(w): 
     units = w['units']
-    print("Current conditions: {1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
-        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset']))
-    print("Forecast")
+    print("Current conditions as of {7}\n{1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
+        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset'], w['when']))
+    print("Forecast:")
     for f in w['forecasts']:
         print('{0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
 
-
-while True:
+def get_weather_forever():
     try:
         w = get_weather(10583, 5, False)
         print_weather(w)
     except Exception as e:
         print("Error:", repr(e))
     time.sleep(5)
+
+#get_weather_forever()
+w = get_weather(10583, 5, False)
+print_weather(w)
+                 
