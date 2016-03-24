@@ -42,12 +42,13 @@ def get_weather(zipCode, days, metric):
     }
     return d
 
-def print_weather(w):
+def print_weather(w): 
+    units = w['units']
     print("Current conditions: {0}, {1}{2} in {3} {4}\nThe sun rises at {5} and sunsets at {6}".format(
-        w['condition'], w['temp'], w['units'], w['city'], w['region'], w['sunrise'], w['sunset']))
+        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset']))
     print("Forecast")
     for f in w['forecasts']:
-        print('{0}: {1} low = {2}, high = {3}'.format(f['day'], f['condition'], f['low'], f['high']))
+        print('{0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
     
-w = get_weather(10583, 5, True)
+w = get_weather(10583, 5, False)
 print_weather(w)
