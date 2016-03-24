@@ -83,13 +83,13 @@ function umountFS()
 
 function networkSetup()
 {
-    sudo cp -v $2/usr/share/zoneinfo/America/New_York $2/etc/localtime
-    sudo cp -v $2/home/pi/git/rpi/net/interfaces $2/etc/network
-    sudo cp -v ~/rpi-private/wpa_supplicant.conf $2/etc/wpa_supplicant
+    sudo cp -v $1/usr/share/zoneinfo/America/New_York $1/etc/localtime
+    sudo cp -v $1/home/pi/git/rpi/net/interfaces $1/etc/network
+    sudo cp -v ~/rpi-private/wpa_supplicant.conf $1/etc/wpa_supplicant
 
-    rm -fr $2/home/pi/.ssh
-    mkdir $2/home/pi/.ssh
-    cat ~/.ssh/id_rsa.pub >> $2/home/pi/.ssh/authorized_keys
+    rm -fr $1/home/pi/.ssh
+    mkdir $1/home/pi/.ssh
+    cat ~/.ssh/id_rsa.pub >> $1/home/pi/.ssh/authorized_keys
 }
 
 function get_rpi()
