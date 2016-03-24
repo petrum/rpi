@@ -48,6 +48,11 @@ def print_weather(w):
     print("Forecast")
     for f in w['forecasts']:
         print('{0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
-    
-w = get_weather(10583, 5, False)
-print_weather(w)
+
+
+while True:
+    try:
+        w = get_weather(10583, 5, False)
+        print_weather(w)
+    except Exception, e:
+        print("Error:", str(e))
