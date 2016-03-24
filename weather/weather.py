@@ -5,7 +5,7 @@ from xml.dom.minidom import parse
 import time
 import sys
 
-WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
+WEATHER_URL = 'htstp://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
 WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
 
@@ -47,23 +47,37 @@ def get_weather(zipCode, days, metric):
 
 def format_weather(w): 
     units = w['units']
-    ret = ''
-    ret += "Current conditions as of {7}\n{1}{2} and {0} in {3} {4}\nThe sun rises at {5} and sunsets at {6}\n".format(
-        w['condition'], w['temp'], units, w['city'], w['region'], w['sunrise'], w['sunset'], w['when'])
-    ret += "Forecast:\n"
+    ret = []
+    ret.append("Current conditions as of {5}\n{1}{2} and {0} in {3} {4}".format(
+        w['condition'], w['temp'], units, w['city'], w['region'], w['when']))
+    ret.append("The sun rises at {0} and sunsets at {1}".format(w['sunrise'], w['sunset']))
+    ret.append("Forecast:")
     for f in w['forecasts']:
-        ret += '{0}: {1} low = {2}{4}, high = {3}{4}\n'.format(f['day'], f['condition'], f['low'], f['high'], units)
+        ret.append('{0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
     return ret
 
+fName = "/tmp/weather.txt"
 def get_weather_forever():
-    try:
-        w = get_weather(10583, 5, False)
-        print(format_weather(w))
-    except Exception as e:
-        print("Error:", repr(e))
-    time.sleep(5)
+    while True:
+        try:
+            w = get_weather(10583, 5, False)
+            s = format_weather(w)
+            f = open(fName, "w")
+            for n in s:
+                print(n, file=f)
+            f.close()
+            display(s)
+        except Exception as e:
+            display(["ERROR: " + repr(e)])
+            with open(fName, 'r') as f:
+                display(f.read().splitlines())
+                f.close()        
+        time.sleep(10)
 
-#get_weather_forever()
-w = get_weather(10583, 5, False)
-sys.stdout.write(format_weather(w))
-                 
+def display(s):
+    for line in s:
+        print(line)
+
+get_weather_forever()
+#w = get_weather(10583, 5, False)
+#display(format_weather(w))
