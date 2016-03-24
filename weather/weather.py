@@ -3,7 +3,6 @@
 import urllib.request, urllib.parse, urllib.error
 from xml.dom.minidom import parse
 
-DAYS_LIMIT = 5
 WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
 WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
