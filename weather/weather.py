@@ -17,7 +17,7 @@ WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
 def get_weather(zipCode, days, metric):
     url = WEATHER_URL % zipCode
     if metric:
-        url = url + METRIC_PARAMETER
+        url += METRIC_PARAMETER
     #print(url)
     dom = parse(urlopen(url))
     forecasts = []
