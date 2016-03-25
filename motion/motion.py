@@ -23,7 +23,9 @@ import socket
 
 GPIO.setmode(GPIO.BCM)
 pir = 27
-GPIO.setup(pir, GPIO.IN)
+
+
+GPIO.setup(pir, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 def alarm():
     ts = time.time()
