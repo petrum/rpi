@@ -34,7 +34,7 @@ def alarm():
         last = ts
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         result = os.system("echo PIR motion detection at " + st + " | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no petrum@192.168.1.5 mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
-        print(st, "PIR ALARM!")
+        print st, "PIR ALARM!"
 
 last = 0
 while True:
