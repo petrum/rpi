@@ -53,8 +53,8 @@ def get_weather(zipCode, days, metric):
 def format_weather(w): 
     units = w['units']
     ret = []
-    ret.append("Current conditions as of {5}\n{1}{2} and {0} in {3} {4}".format(
-        w['condition'], w['temp'], units, w['city'], w['region'], w['when']))
+    ret.append("Current conditions as of {0}".format(w['when']))
+    ret.append("{1}{2} and {0} in {3} {4}".format(w['condition'], w['temp'], units, w['city'], w['region'], w['when']))
     ret.append("The sun rises at {0} and sunsets at {1}".format(w['sunrise'], w['sunset']))
     ret.append("Forecast:")
     for f in w['forecasts']:
@@ -65,7 +65,7 @@ fName = "/tmp/weather.txt"
 def get_weather_forever():
     while True:
         try:
-            w = get_weather(10583, 5, False)
+            w = get_weather(10583, 5, True)
             s = format_weather(w)
             f = open(fName, "w")
             for n in s:
