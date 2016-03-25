@@ -1,10 +1,11 @@
 #!/usr/bin/python
-
+from __future__ import print_function
 import time
 import datetime
 import os
 import RPi.GPIO as GPIO
 import socket
+import sys
 
 #PIR Sensor(#555-28027)
 #https://www.parallax.com/sites/default/files/downloads/555-28027-PIR-Sensor-Product-Guide-v2.3.pdf
@@ -24,7 +25,6 @@ import socket
 GPIO.setmode(GPIO.BCM)
 pir = 27
 
-
 GPIO.setup(pir, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 def alarm():
@@ -34,7 +34,7 @@ def alarm():
         last = ts
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         result = os.system("echo PIR motion detection at " + st + " | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no petrum@192.168.1.5 mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
-        print st, "PIR ALARM!"
+        print(st, "PIR ALARM!", file=sys.stderr)
 
 last = 0
 while True:
