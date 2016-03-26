@@ -9,5 +9,4 @@ sethostname motion $DEST
 get_rpi $DEST
 sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/motion.sh >> /root/motion.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
 sudo cp -v /home/petrum/rpi-private/ssmtp.conf $DEST/home/pi/ssmtp.conf
-chmod a+x $DEST/home/pi/setup.sh
 umountFS $DEST
