@@ -7,5 +7,5 @@ done
 echo "Done at " $(date)
 HOST=$(hostname)
 IP=$(hostname -I)
-(date; echo "$HOST $IP") | mail -s "Motion started" petru.marginean@gmail.com
+(date; echo "$HOST $IP") | mail -s "RPI motion started" petru.marginean@gmail.com
 /home/pi/git/rpi/motion/motion.py
