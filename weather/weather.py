@@ -80,12 +80,12 @@ def get_weather_forever():
         time.sleep(1)
 
 def display(s):    
-    m7219.init()
-    m7219.brightness(7)
     for line in s:
+        m7219.init()
+        m7219.brightness(7)
         m7219.scroll_message_horiz(line, 1, 5.5, DIR_L, CP437_FONT)
+        m7219.clear_all()
         #print(line)
-    m7219.clear_all()
 
 get_weather_forever()
 #w = get_weather(10583, 5, False)
