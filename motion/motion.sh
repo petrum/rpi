@@ -5,5 +5,5 @@ while ! /bin/bash /home/pi/git/rpi/motion/setup.sh ; do
 done
 HOST=$(hostname)
 IP=$(hostname -I)
-date | mail -s "Motion started on $HOST using $IP" petru.marginean@gmail.com
+(date; echo "$HOST $IP") | mail -s "Motion started" petru.marginean@gmail.com
 /home/pi/git/rpi/motion/motion.py
