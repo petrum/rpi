@@ -1,7 +1,6 @@
 #!/bin/bash
 
-while ! /home/pi/git/rpi/motion/setup.sh ; then
-do
+while ! /home/pi/git/rpi/motion/setup.sh ; do
     sleep 5
 done
 HOST=$(hostname)
