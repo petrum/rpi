@@ -15,6 +15,7 @@ sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/motion.py >> /root/motion.log 2>\
 
 sudo cp -v /home/petrum/rpi-private/ssmtp.conf $DEST/home/pi/ssmtp.conf
 cat << EOF > $DEST/home/pi/setup.sh
+sudo apt-get update --fix-missing
 sudo apt-get install ssmtp mailutils -y
 cat /home/pi/ssmtp.conf | sudo tee -a /etc/ssmtp/ssmtp.conf
 EOF
