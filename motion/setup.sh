@@ -1,10 +1,11 @@
 #!/bin/bash
 
 ip=$(hostname -I) || true
-if [ "$ip" ]; then
+if [ ! "$ip" ]; then
     echo "No IP..."
     exit 1
 fi
+echo "IP = $ip"
 if grep --quiet AuthUser /etc/ssmtp/ssmtp.conf; then
     echo "Everything looks fine already..."
     exit 0
