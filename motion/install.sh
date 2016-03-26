@@ -15,9 +15,13 @@ sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/motion.py >> /root/motion.log 2>\
 
 sudo cp -v /home/petrum/rpi-private/ssmtp.conf $DEST/home/pi/ssmtp.conf
 cat << EOF > $DEST/home/pi/setup.sh
-apt-get update --fix-missing
-apt-get install ssmtp mailutils -y
-cat /home/pi/ssmtp.conf | tee -a /etc/ssmtp/ssmtp.conf
+apt-get update --fix-missing || exit 1
+apt-get install ssmtp mailutils vim -y || exit 2
+if grep --quiet AuthUser /etc/ssmtp/ssmtp.conf; then
+    exit 0
+fi
+cat /home/pi/ssmtp.conf | tee -a /etc/ssmtp/ssmtp.conf || exit 3
+exit 0
 EOF
 chmod a+x $DEST/home/pi/setup.sh
 umountFS $DEST
