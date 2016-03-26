@@ -8,8 +8,15 @@ DEST=$(mountFS $READER 2)
 sethostname motion $DEST
 get_rpi $DEST
 sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/motion.py >> /root/motion.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
-sudo mkdir -p $DEST/root/.ssh
-sudo cp -v /home/petrum/rpi-private/id_rsa $DEST/root/.ssh
-sudo chmod 600 $DEST/root/.ssh/id_rsa
-sudo ls -ltr $DEST/root/.ssh/id_rsa
+#sudo mkdir -p $DEST/root/.ssh
+#sudo cp -v /home/petrum/rpi-private/id_rsa $DEST/root/.ssh
+#sudo chmod 600 $DEST/root/.ssh/id_rsa
+#sudo ls -ltr $DEST/root/.ssh/id_rsa
+
+sudo cp -v /home/petrum/rpi-private/ssmtp.conf $DEST/home/pi/ssmtp.conf
+cat << EOF > $DEST/home/pi/setup.sh
+sudo apt-get install ssmtp mailutils -y
+cat /home/pi/ssmtp.conf | sudo tee -a /etc/ssmtp/ssmtp.conf
+EOF
+chmod a+x $DEST/home/pi/setup.sh
 umountFS $DEST
