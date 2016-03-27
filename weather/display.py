@@ -10,7 +10,7 @@ def get_weather_forever():
     while True:
         try:
             fh = open(f, 'w')
-            display(fh.read().splitlines()
+            display(fh.read().splitlines())
             fh.close()
         except Exception as e:
             display(["ERROR: " + repr(e)])
