@@ -21,7 +21,7 @@ def display(s):
     for line in s:
         m7219.init()
         m7219.brightness(7)
-        m7219.scroll_message_horiz(line, 1, 5.5, DIR_L, CP437_FONT)
+        m7219.scroll_message_horiz(line, 1, 6.5, DIR_L, CP437_FONT)
         m7219.clear_all()
         #print(line)
 
