@@ -17,16 +17,16 @@ if ! apt-get update --fix-missing >/dev/null 2>&1 ; then
 fi
 echo "done"
 echo "Installing..."
-#if ! apt-get install python-pip python-dev vim -y >/dev/null 2>&1 ; then
-#    echo 'Failed to install...'
-#    exit 3
-#fi
+if ! apt-get install python-pip python-dev vim -y >/dev/null 2>&1 ; then
+    echo 'Failed to install...'
+    exit 3
+fi
 echo "done"
 echo "pip installing spidev..."
-#if ! pip install spidev >/dev/null 2>&1 ; then
-#    echo 'Failed to install spidev...'
-#    exit 3
-#fi
+if ! pip install spidev >/dev/null 2>&1 ; then
+    echo 'Failed to install spidev...'
+    exit 3
+fi
 echo "done"
 
 touch /root/setup.done
