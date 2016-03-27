@@ -8,6 +8,6 @@ while ! /bin/bash /home/pi/git/rpi/weather/setup.sh ; do
     sleep 5
 done
 echo "Done at " $(date)
-
+sync
 PYTHONPATH=/home/pi/MAX7219array "$(dirname $0)"/display.py /home/pi/weather.txt
 
