@@ -25,3 +25,4 @@ def display(s):
         #print(line)
 
 get_weather_forever()
+
