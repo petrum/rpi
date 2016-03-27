@@ -6,7 +6,7 @@ if [ ! "$ip" ]; then
     exit 1
 fi
 echo "IP = $ip"
-if -e /root/setup.done; then
+if [[ -f /root/setup.done ]] ; then
     echo "Everything looks fine already..."
     exit 0
 fi
