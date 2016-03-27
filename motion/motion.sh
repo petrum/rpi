@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Started at " $(date)
 while ! /bin/bash /home/pi/git/rpi/motion/setup.sh ; do
-    echo -e '.'
+    echo 'Sleeping 5 sec...'
     sleep 5
 done
 echo "Done at " $(date)
