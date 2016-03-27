@@ -1,0 +1,2 @@
+*/5 * * * * /home/pi/git/rpi/weather/weather.py 10583 2 1 /home/pi/weather.txt
+

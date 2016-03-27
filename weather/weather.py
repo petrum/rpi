@@ -58,5 +58,9 @@ def format_weather(w):
     return ret
 
 w = get_weather(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3] != '0')
+f = sys.stdout
+if len(sys.argv) == 5:
+    f = open(sys.argv[4], 'w')
+
 for line in format_weather(w):
-    print(line)
+    print(line, file=f)
