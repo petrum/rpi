@@ -103,9 +103,17 @@ function get_rpi()
 
 function sethostname()
 {
-    NAME=$(date +"$1-%Y%m%d-%H%M%S")
+    BUILD=~/.rpi-counter.txt
+    if [ ! -f $BUILD ]; then
+        echo 0 > $BUILD
+    fi
+    COUNTER=$(cat $BUILD)
+    #NAME=$(date +"$1-%Y%m%d-%H%M%S")
+    NAME="$1-$COUNTER"
     sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hosts
     sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hostname
+    ((COUNTER++))
+    echo $COUNTER > $BUILD
 }
 
 function static_ip()
