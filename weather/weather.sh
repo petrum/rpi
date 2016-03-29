@@ -12,6 +12,7 @@ echo "Done at " $(date)
 sync
 while :
 do
-    cat /home/pi/weather.txt | "$(dirname $0)"/display.py
+    cat /home/pi/weather.txt | /home/pi/git/rpi/weather/display.py
     sleep 1
 done
+

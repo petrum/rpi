@@ -1,35 +1,35 @@
 #!/bin/bash
-
+/home/pi/git/rpi/weather/display.py Started
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then
-    echo "No IP..."
+    /home/pi/git/rpi/weather/display.py No IP
     exit 1
 fi
-echo "IP = $ip"
+/home/pi/git/rpi/weather/display.py 'IP =' $ip
 if [[ -f /root/setup.done ]] ; then
-    echo "Everything looks fine already..."
+    /home/pi/git/rpi/weather/display.py Everything looks fine already
     exit 0
 fi
-echo "Updating..."
+/home/pi/git/rpi/weather/display.py Updating
 if ! apt-get update --fix-missing >/dev/null 2>&1 ; then
-   echo 'Failed to update...'
+   /home/pi/git/rpi/weather/display.py Failed to update
    exit 2
 fi
-echo "done"
-echo "Installing..."
+/home/pi/git/rpi/weather/display.py done
+/home/pi/git/rpi/weather/display.py Installing
 if ! apt-get install python-pip python-dev vim -y >/dev/null 2>&1 ; then
-    echo 'Failed to install...'
+    /home/pi/git/rpi/weather/display.py Failed to install
     exit 3
 fi
-echo "done"
-echo "pip installing spidev..."
+/home/pi/git/rpi/weather/display.py done
+/home/pi/git/rpi/weather/display.py pip installing spidev
 if ! pip install spidev >/dev/null 2>&1 ; then
-    echo 'Failed to install spidev...'
+    /home/pi/git/rpi/weather/display.py Failed to install spidev
     exit 3
 fi
-echo "done"
+/home/pi/git/rpi/weather/display.py done
 
 touch /root/setup.done
-echo 'All setup'
+/home/pi/git/rpi/weather/display.py All setup
 exit 0
 
