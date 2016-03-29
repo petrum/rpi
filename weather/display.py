@@ -12,3 +12,4 @@ for line in sys.stdin:
     m7219.scroll_message_horiz(line.rstrip(), 1, 7, DIR_L, CP437_FONT)
     m7219.clear_all()
     #print(line)
+
