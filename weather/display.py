@@ -14,7 +14,7 @@ if len(sys.argv) == 1:
     	m7219.clear_all()
     	#print(line)
 	sys.exit(0)
-
+print sys.argv
 m7219.init()
 prev = ''
 for word in sys.argv[1:]:
