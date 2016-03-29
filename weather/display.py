@@ -6,9 +6,9 @@ import sys
 import time
 import fileinput
 
-for line in fileinput.input():
+for line in sys.stdin:
     m7219.init()
-    m7219.brightness(7)
-    m7219.scroll_message_horiz(line, 1, 6.5, DIR_L, CP437_FONT)
+    m7219.brightness(1)
+    m7219.scroll_message_horiz(line.rstrip(), 1, 7, DIR_L, CP437_FONT)
     m7219.clear_all()
     #print(line)
