@@ -9,10 +9,10 @@ import fileinput
 if len(sys.argv) == 1:
     for line in sys.stdin:
         m7219.init()
-	m7219.brightness(1)
-    	m7219.scroll_message_horiz(line.rstrip(), 1, 7, DIR_L, CP437_FONT)
-    	m7219.clear_all()
-    	#print(line)
+        m7219.brightness(1)
+        m7219.scroll_message_horiz(line.rstrip(), 1, 5, DIR_L, CP437_FONT)
+        m7219.clear_all()
+        #print(line)
     sys.exit(0)
 print sys.argv
 m7219.init()
