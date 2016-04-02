@@ -81,24 +81,44 @@ function umountFS()
     sync
 }
 
-function networkSetup()
+function dynamic_ip()
 {
-    sudo cp -v $1/usr/share/zoneinfo/America/New_York $1/etc/localtime
-    sudo cp -v $1/home/pi/git/rpi/net/interfaces $1/etc/network
-    sudo cp -v ~/rpi-private/wpa_supplicant.conf $1/etc/wpa_supplicant
+    GW=$1
+    MASK=$2
+    CFG="$3/etc/network/interfaces"
+    sudo cp -v $CFG "$CFG.bak"
+    echo "netmask $MASK" | sudo tee -a $CFG
+    echo "gateway $GW" | sudo tee -a $CFG
+}
 
+#http://sizious.com/2015/08/28/setting-a-static-ip-on-raspberry-pi-on-raspbian-20150505/
+function static_ip()
+{
+    IP=$1
+    ROUTER=$2
+    DHCP="$3/etc/dhcpcd.conf"
+    sudo cp -v $DHCP "$DHCP.orig"
+    echo 'interface wlan0' | sudo tee -a $DHCP
+    echo "  static ip_address=$IP/24" | sudo tee -a $DHCP
+    echo "  static routers=$ROUTER" | sudo tee -a $DHCP
+    echo "  static domain_name_servers=8.8.8.8" | sudo tee -a $DHCP
+}
+
+function generic_setup()
+{
     rm -fr $1/home/pi/.ssh
     mkdir $1/home/pi/.ssh
     cat ~/.ssh/id_rsa.pub >> $1/home/pi/.ssh/authorized_keys
-}
 
-function get_rpi()
-{
+    sudo cp -v $1/usr/share/zoneinfo/America/New_York $1/etc/localtime
+
     RPI="$1/home/pi/git/rpi"
     rm -fr $RPI
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
-    networkSetup $1
+    
+    sudo cp -v $1/etc/wpa_supplicant/wpa_supplicant.conf $1/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    sudo cp -v ~/rpi-private/wpa_supplicant.conf $1/etc/wpa_supplicant
 }
 
 function sethostname()
@@ -114,19 +134,6 @@ function sethostname()
     sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hostname
     ((COUNTER++))
     echo $COUNTER > $BUILD
-}
-
-#http://sizious.com/2015/08/28/setting-a-static-ip-on-raspberry-pi-on-raspbian-20150505/
-function static_ip()
-{
-    IP=$1
-    ROUTER=$2
-    DHCP="$3/etc/dhcpcd.conf"
-    sudo cp -v $DHCP "$DHCP.orig"
-    echo 'interface wlan0' | sudo tee -a $DHCP
-    echo "static ip_address=$IP/24" | sudo tee -a $DHCP
-    echo "static routers=$ROUTER" | sudo tee -a $DHCP
-    echo "static domain_name_servers=$ROUTER" | sudo tee -a $DHCP
 }
 
 function enable_spi()

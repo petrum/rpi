@@ -8,10 +8,10 @@ BOOT=$(mountFS $READER 1)
 enable_spi $BOOT
 umountFS $BOOT
 DEST=$(mountFS $READER 2)
+generic_setup $DEST
+dynamic_ip 192.168.1.1 255.255.255.0 $DEST 
 sethostname weather $DEST
-get_rpi $DEST
 get_MAX7219array $DEST
-#autostart_MAX7219array_demo $DEST
-sudo sed -i 's|^exit 0|cd /home/pi/git/rpi/weather; ./weather.sh >> /root/weather.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
+sudo sed -i 's|^exit 0|/home/pi/git/rpi/weather/startup.sh >> /root/weather.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
 umountFS $DEST
 
