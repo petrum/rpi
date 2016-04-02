@@ -13,8 +13,8 @@ $DISPLAY 'IP ='
 echo $ip | $DISPLAY
 
 $DISPLAY git upgrade please wait...
-git clone https://github.com/petrum/rpi.git /home/pi/git/rpi
-
+cd /home/pi/git/rpi
+git pull
 if [[ -f /root/setup.done ]] ; then
     $DISPLAY all looks fine already
     exit 0
