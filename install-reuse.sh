@@ -116,6 +116,7 @@ function sethostname()
     echo $COUNTER > $BUILD
 }
 
+#http://sizious.com/2015/08/28/setting-a-static-ip-on-raspberry-pi-on-raspbian-20150505/
 function static_ip()
 {
     IP=$1
