@@ -119,10 +119,13 @@ function sethostname()
 function static_ip()
 {
     IP=$1
-    DHCP="$2/etc/dhcpcd.conf"
+    ROUTER=$2
+    DHCP="$3/etc/dhcpcd.conf"
     sudo cp -v $DHCP "$DHCP.orig"
     echo 'interface wlan0' | sudo tee -a $DHCP
     echo "static ip_address=$IP/24" | sudo tee -a $DHCP
+    echo "static routers=$ROUTER" | sudo tee -a $DHCP
+    echo "static domain_name_servers=$ROUTER" | sudo tee -a $DHCP
 }
 
 function enable_spi()
