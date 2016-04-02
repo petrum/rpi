@@ -1,7 +1,9 @@
 #!/bin/bash
 LOG=/root/setup.log
-DISPLAY=$DISPLAY
-$DISPLAY Started
+
+DISPLAY=/home/pi/git/rpi/weather/display.py
+
+$DISPLAY connect please wait...
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then
     $DISPLAY No IP
@@ -10,7 +12,7 @@ fi
 $DISPLAY 'IP ='
 echo $ip | $DISPLAY
 
-$DISPLAY upgrade please wait...
+$DISPLAY git upgrade please wait...
 git clone https://github.com/petrum/rpi.git /home/pi/git/rpi
 
 if [[ -f /root/setup.done ]] ; then
@@ -29,7 +31,7 @@ if ! apt-get install python-pip python-dev vim git -y >> $LOG 2>&1 ; then
     exit 3
 fi
 $DISPLAY done
-$DISPLAY pip installing spidev please wait...
+$DISPLAY pip install spidev please wait...
 if ! pip install spidev >> $LOG 2>&1 ; then
     $DISPLAY failed to install spidev
     exit 3
