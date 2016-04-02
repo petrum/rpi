@@ -1,35 +1,41 @@
 #!/bin/bash
 LOG=/root/setup.log
-/home/pi/git/rpi/weather/display.py Started
+DISPLAY=$DISPLAY
+$DISPLAY Started
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then
-    /home/pi/git/rpi/weather/display.py No IP
+    $DISPLAY No IP
     exit 1
 fi
-/home/pi/git/rpi/weather/display.py 'IP ='
-echo $ip | /home/pi/git/rpi/weather/display.py
+$DISPLAY 'IP ='
+echo $ip | $DISPLAY
+
+$DISPLAY upgrade please wait...
+git clone https://github.com/petrum/rpi.git /home/pi/git/rpi
+
 if [[ -f /root/setup.done ]] ; then
-    /home/pi/git/rpi/weather/display.py Everything looks fine already
+    $DISPLAY all looks fine already
     exit 0
 fi
-/home/pi/git/rpi/weather/display.py Updating please wait...
+$DISPLAY update please wait...
 if ! apt-get update --fix-missing >> $LOG 2>&1 ; then
-   /home/pi/git/rpi/weather/display.py Failed to update
+   $DISPLAY failed to update
    exit 2
 fi
-/home/pi/git/rpi/weather/display.py done
-/home/pi/git/rpi/weather/display.py Installing please wait...
-if ! apt-get install python-pip python-dev vim -y >> $LOG 2>&1 ; then
-    /home/pi/git/rpi/weather/display.py Failed to install
+$DISPLAY done
+$DISPLAY install please wait...
+if ! apt-get install python-pip python-dev vim git -y >> $LOG 2>&1 ; then
+    $DISPLAY failed to install
     exit 3
 fi
-/home/pi/git/rpi/weather/display.py done
-/home/pi/git/rpi/weather/display.py pip installing spidev please wait...
+$DISPLAY done
+$DISPLAY pip installing spidev please wait...
 if ! pip install spidev >> $LOG 2>&1 ; then
-    /home/pi/git/rpi/weather/display.py Failed to install spidev
+    $DISPLAY failed to install spidev
     exit 3
 fi
-/home/pi/git/rpi/weather/display.py done all
+ 
+$DISPLAY setup done
 touch /root/setup.done
 exit 0
 
