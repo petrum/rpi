@@ -38,10 +38,12 @@ function selectMicroSD()
 
 function diskcopy()
 {
+    IN=$1
+    OUT=$2
     date
     local BEGIN=$(date +%s)
-    echo "dd $1 $2"
-    sudo dcfldd bs=4M if="$1" of="/dev/$2"
+    echo "dd $IN $OUT"
+    sudo dcfldd bs=4M if="$IN" of="/dev/$OUT"
     local END=$(date +%s)
     local ELAPSED=$((END - BEGIN))
     local MIN=$((ELAPSED / 60))
@@ -51,6 +53,7 @@ function diskcopy()
 
 function expandFS()
 {
+    DEV=$1
     echo "d
 2
 n
@@ -58,26 +61,29 @@ p
 2
 131072
 
-w" | sudo fdisk /dev/$1
-    sudo e2fsck -f /dev/${1}2
-    sudo resize2fs /dev/${1}2
+w" | sudo fdisk /dev/$DEV
+    sudo e2fsck -f /dev/${DEV}2
+    sudo resize2fs /dev/${DEV}2
 }
 
 function mountFS()
 {
-    local TMP=~/tmp/$$-$2
+    DEV=$1
+    PART=$2
+    local TMP=~/tmp/$$-$PART
     mkdir -p "$TMP"
-    PART="/dev/${1}$2"
+    PART="/dev/${DEV}$PART"
     echo "Mounting '$PART' into '$TMP'" 1>&2
-    sudo mount "/dev/${1}$2" "$TMP"
+    sudo mount "/dev/${DEV}$PART" "$TMP"
     echo $TMP
 }
 
 function umountFS()
 {
-    sudo umount "$1"
-    rm -r "$1"
-    echo "Unmounted and removed '$1'" 1>&2
+    MOUNTED=$1
+    sudo umount "$MOUNTED"
+    rm -r "$MOUNTED"
+    echo "Unmounted and removed '$MOUNTED'" 1>&2
     sync
 }
 
@@ -85,7 +91,8 @@ function dynamic_ip()
 {
     GW=$1
     MASK=$2
-    CFG="$3/etc/network/interfaces"
+    DEST=$3
+    CFG="$DEST/etc/network/interfaces"
     sudo cp -v $CFG "$CFG.bak"
     echo "netmask $MASK" | sudo tee -a $CFG
     echo "gateway $GW" | sudo tee -a $CFG
@@ -96,67 +103,62 @@ function static_ip()
 {
     IP=$1
     ROUTER=$2
-    DHCP="$3/etc/dhcpcd.conf"
-    sudo cp -v $DHCP "$DHCP.orig"
-    echo 'interface wlan0' | sudo tee -a $DHCP
-    echo "  static ip_address=$IP/24" | sudo tee -a $DHCP
-    echo "  static routers=$ROUTER" | sudo tee -a $DHCP
-    echo "  static domain_name_servers=8.8.8.8" | sudo tee -a $DHCP
+    DEST=$3
+    CONF="$DEST/etc/dhcpcd.conf"
+    sudo cp -v $CONF "$CONF.orig"
+    echo 'interface wlan0' | sudo tee -a $CONF
+    echo "  static ip_address=$IP/24" | sudo tee -a $CONF
+    echo "  static routers=$ROUTER" | sudo tee -a $CONF
+    echo "  static domain_name_servers=8.8.8.8" | sudo tee -a $CONF
 }
 
 function generic_setup()
 {
-    rm -fr $1/home/pi/.ssh
-    mkdir $1/home/pi/.ssh
-    cat ~/.ssh/id_rsa.pub >> $1/home/pi/.ssh/authorized_keys
+    DEST=$1
+    
+    rm -fr $DEST/home/pi/.ssh
+    mkdir $DEST/home/pi/.ssh
+    cat ~/.ssh/id_rsa.pub >> $DEST/home/pi/.ssh/authorized_keys
 
-    sudo cp -v $1/usr/share/zoneinfo/America/New_York $1/etc/localtime
+    sudo cp -v $DEST/usr/share/zoneinfo/America/New_York $DEST/etc/localtime
 
-    RPI="$1/home/pi/git/rpi"
+    RPI="$DEST/home/pi/git/rpi"
     rm -fr $RPI
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
     
-    sudo cp -v $1/etc/wpa_supplicant/wpa_supplicant.conf $1/etc/wpa_supplicant/wpa_supplicant.conf.bak
-    sudo cp -v ~/rpi-private/wpa_supplicant.conf $1/etc/wpa_supplicant
+    sudo cp -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    sudo cp -v ~/rpi-private/wpa_supplicant.conf $DEST/etc/wpa_supplicant
 }
 
 function sethostname()
 {
+    NAME=$1
+    DEST=$2
     BUILD=~/.rpi-counter.txt
-    if [ ! -f $BUILD ]; then
+    if [[ ! -f $BUILD ]]; then
         echo 0 > $BUILD
     fi
     COUNTER=$(cat $BUILD)
-    #NAME=$(date +"$1-%Y%m%d-%H%M%S")
-    NAME="$1-$COUNTER"
-    sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hosts
-    sudo sed -i "s/raspberrypi/$NAME/g" $2/etc/hostname
+    #NAME=$(date +"$DEST-%Y%m%d-%H%M%S")
+    NAME="$DEST-$COUNTER"
+    sudo sed -i "s/raspberrypi/$NAME/g" $DEST/etc/hosts
+    sudo sed -i "s/raspberrypi/$NAME/g" $DEST/etc/hostname
     ((COUNTER++))
     echo $COUNTER > $BUILD
 }
 
 function enable_spi()
 {
-    sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $1/config.txt
+    DEST=$1
+    sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $DEST/config.txt
 }
 
 function get_MAX7219array()
 {
-    rm -fr $1/home/pi/MAX7219array
-    git clone https://github.com/JonA1961/MAX7219array.git $1/home/pi/MAX7219array
-    sed -i 's/NUM_MATRICES = 8/NUM_MATRICES = 7/g' $1/home/pi/MAX7219array/MAX7219array.py
-    cat << EOF >> $1/home/pi/setup.sh
-sudo apt-get install build-essential python-dev python-pip
-sudo pip install spidev
-EOF
-    chmod a+x $1/home/pi/setup.sh
+    DEST=$1
+    NUM=$2
+    rm -fr $DEST/home/pi/MAX7219array
+    git clone https://github.com/JonA1961/MAX7219array.git $DEST/home/pi/MAX7219array
+    sed -i "s/NUM_MATRICES = 8/NUM_MATRICES = $NUM/g" $DEST/home/pi/MAX7219array/MAX7219array.py
 }
-
-function autostart_MAX7219array_demo()
-{
-    chmod a+x $1/home/pi/MAX7219array/MAX7219array_demo.py    
-    sudo sed -i 's|^exit 0|cd /home/pi/MAX7219array; ./MAX7219array_demo.py\nexit 0|g' $1/etc/rc.local
-}
-
-
