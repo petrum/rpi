@@ -5,6 +5,7 @@ from urllib2 import urlopen
 from xml.dom.minidom import parse
 import time
 import sys
+import os
 
 WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
@@ -58,9 +59,24 @@ def format_weather(w):
     return ret
 
 w = get_weather(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3] != '0')
+
+if len(sys.argv) >= 6:
+    path = sys.argv[4]
+    age = int(sys.argv[5])
+    if os.path.isfile(path):
+        st = os.stat(path)
+        mtime = st.st_mtime
+        now = int(time.time())
+        ago = now - mtime
+        #print(now, mtime, ago)
+        if ago < age:
+            #print("The file was modified ", ago, " seconds ago");
+            sys.exit(0)
+
 f = sys.stdout
-if len(sys.argv) == 5:
+if len(sys.argv) >= 5:
     f = open(sys.argv[4], 'w+')
 
 for line in format_weather(w):
     print(line, file=f)
+
