@@ -51,6 +51,6 @@ for i in range(10):
     micro_sleep(1000 * 20)
     ding("0000001110111")
 
-print "total:", time.time() * 1000000 - start, 'microsec'
+print "total:", int((time.time() * 1000000 - start) / 1000), 'ms'
 
 GPIO.cleanup()
