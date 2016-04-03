@@ -58,8 +58,6 @@ def format_weather(w):
         ret.append('- {0}: {1} low = {2}{4}, high = {3}{4}'.format(f['day'], f['condition'], f['low'], f['high'], units))
     return ret
 
-w = get_weather(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3] != '0')
-
 if len(sys.argv) >= 6:
     path = sys.argv[4]
     age = int(sys.argv[5])
@@ -72,6 +70,8 @@ if len(sys.argv) >= 6:
         if ago < age:
             #print("The file was modified ", ago, " seconds ago");
             sys.exit(0)
+
+w = get_weather(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3] != '0')
 
 f = sys.stdout
 if len(sys.argv) >= 5:
