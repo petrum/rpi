@@ -38,8 +38,8 @@ function selectMicroSD()
 
 function diskcopy()
 {
-    IN=$1
-    OUT=$2
+    local IN=$1
+    local OUT=$2
     date
     local BEGIN=$(date +%s)
     echo "dd $IN $OUT"
@@ -53,7 +53,7 @@ function diskcopy()
 
 function expandFS()
 {
-    DEV=$1
+    local DEV=$1
     echo "d
 2
 n
@@ -68,19 +68,19 @@ w" | sudo fdisk /dev/$DEV
 
 function mountFS()
 {
-    DEV=$1
-    PART=$2
+    local DEV=$1
+    local PART=$2
     local TMP=~/tmp/$$-$PART
-    mkdir -p "$TMP"
-    PART="/dev/${DEV}$PART"
-    echo "Mounting '$PART' into '$TMP'" 1>&2
-    sudo mount "/dev/${DEV}$PART" "$TMP"
+    mkdir -p "$TMP"    
+    local DISK="/dev/${DEV}$PART"
+    echo "Mounting '$DISK' into '$TMP'" 1>&2
+    sudo mount "$DISK" "$TMP"
     echo $TMP
 }
 
 function umountFS()
 {
-    MOUNTED=$1
+    local MOUNTED=$1
     sudo umount "$MOUNTED"
     rm -r "$MOUNTED"
     echo "Unmounted and removed '$MOUNTED'" 1>&2
@@ -89,10 +89,10 @@ function umountFS()
 
 function dynamic_ip()
 {
-    GW=$1
-    MASK=$2
-    DEST=$3
-    CFG="$DEST/etc/network/interfaces"
+    local GW=$1
+    local MASK=$2
+    local DEST=$3
+    local CFG="$DEST/etc/network/interfaces"
     sudo cp -v $CFG "$CFG.bak"
     echo "netmask $MASK" | sudo tee -a $CFG
     echo "gateway $GW" | sudo tee -a $CFG
@@ -101,10 +101,10 @@ function dynamic_ip()
 #http://sizious.com/2015/08/28/setting-a-static-ip-on-raspberry-pi-on-raspbian-20150505/
 function static_ip()
 {
-    IP=$1
-    ROUTER=$2
-    DEST=$3
-    CONF="$DEST/etc/dhcpcd.conf"
+    local IP=$1
+    local ROUTER=$2
+    local DEST=$3
+    local CONF="$DEST/etc/dhcpcd.conf"
     sudo cp -v $CONF "$CONF.orig"
     echo 'interface wlan0' | sudo tee -a $CONF
     echo "  static ip_address=$IP/24" | sudo tee -a $CONF
@@ -114,15 +114,14 @@ function static_ip()
 
 function generic_setup()
 {
-    DEST=$1
-    
+    local DEST=$1
     rm -fr $DEST/home/pi/.ssh
     mkdir $DEST/home/pi/.ssh
     cat ~/.ssh/id_rsa.pub >> $DEST/home/pi/.ssh/authorized_keys
 
     sudo cp -v $DEST/usr/share/zoneinfo/America/New_York $DEST/etc/localtime
 
-    RPI="$DEST/home/pi/git/rpi"
+    local RPI="$DEST/home/pi/git/rpi"
     rm -fr $RPI
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
@@ -133,15 +132,15 @@ function generic_setup()
 
 function sethostname()
 {
-    NAME=$1
-    DEST=$2
-    BUILD=~/.rpi-counter.txt
+    local PREFIX=$1
+    local DEST=$2
+    local BUILD=~/.rpi-counter.txt
     if [[ ! -f $BUILD ]]; then
         echo 0 > $BUILD
     fi
-    COUNTER=$(cat $BUILD)
-    #NAME=$(date +"$DEST-%Y%m%d-%H%M%S")
-    NAME="$DEST-$COUNTER"
+    local COUNTER=$(cat $BUILD)
+    #local NAME=$(date +"$PREFIX-%Y%m%d-%H%M%S")
+    local NAME="$PREFIX-$COUNTER"
     sudo sed -i "s/raspberrypi/$NAME/g" $DEST/etc/hosts
     sudo sed -i "s/raspberrypi/$NAME/g" $DEST/etc/hostname
     ((COUNTER++))
@@ -150,14 +149,14 @@ function sethostname()
 
 function enable_spi()
 {
-    DEST=$1
+    local DEST=$1
     sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $DEST/config.txt
 }
 
 function get_MAX7219array()
 {
-    DEST=$1
-    NUM=$2
+    local DEST=$1
+    local NUM=$2
     rm -fr $DEST/home/pi/MAX7219array
     git clone https://github.com/JonA1961/MAX7219array.git $DEST/home/pi/MAX7219array
     sed -i "s/NUM_MATRICES = 8/NUM_MATRICES = $NUM/g" $DEST/home/pi/MAX7219array/MAX7219array.py
