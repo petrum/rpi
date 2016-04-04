@@ -15,7 +15,8 @@ echo $ip | $DISPLAY
 $DISPLAY git upgrade please wait...
 cd /home/pi/git/rpi
 git pull
-if [[ -f /root/setup.done ]] ; then
+DONE=/root/setup.done
+if [[ -f $DONE ]] ; then
     $DISPLAY all looks fine already
     exit 0
 fi
@@ -38,6 +39,6 @@ if ! pip install spidev >> $LOG 2>&1 ; then
 fi
  
 $DISPLAY setup done
-touch /root/setup.done
+touch $DONE
 exit 0
 

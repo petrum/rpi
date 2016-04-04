@@ -6,7 +6,9 @@ if [ ! "$ip" ]; then
     exit 1
 fi
 echo "IP = $ip"
-if grep --quiet AuthUser /etc/ssmtp/ssmtp.conf; then
+
+DONE=/root/setup.done
+if [[ -f $DONE ]]; then
     echo "Everything looks fine already..."
     exit 0
 fi
@@ -24,4 +26,5 @@ if ! cat /home/pi/ssmtp.conf >> /etc/ssmtp/ssmtp.conf ; then
     exit 4
 fi
 echo 'All setup'
+touch $DONE
 exit 0
