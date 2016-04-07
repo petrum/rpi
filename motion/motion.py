@@ -35,10 +35,10 @@ def alarm():
         last = ts
         print(st, "PIR ALARM!", file=sys.stderr)
         if len(sys.argv) > 1:
-            addresses = ' '.join(sys.argv[1])
-            cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + addresses
+            address = sys.argv[1]
+            cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + address
             os.system(cmd)
-            print(st, "Sent email to", addresses, file=sys.stderr)
+            print(st, "Sent email to", address, file=sys.stderr)
     else:
         print(st, "PIR Alarm Skipped", file=sys.stderr)
 
