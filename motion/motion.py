@@ -45,7 +45,7 @@ def alarm(p):
 
 last = 0
 while True:
-    alarm(GPIO.wait_for_edge(pir, GPIO.RISING)
+    alarm(GPIO.wait_for_edge(pir, GPIO.RISING))
 
 GPIO.cleanup()
 
