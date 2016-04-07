@@ -27,25 +27,25 @@ pir = 27
 
 GPIO.setup(pir, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-def alarm():
+def alarm(p):
     ts = time.time()
     global last
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-    if ts - last > 30:
+    print(st, "PIR ALARM!", p, file=sys.stderr)
+    old = ts - last
+    if old > 30:
         last = ts
-        print(st, "PIR ALARM!", file=sys.stderr)
         if len(sys.argv) > 1:
             address = sys.argv[1]
             cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + address
             os.system(cmd)
             print(st, "Sent email to", address, file=sys.stderr)
     else:
-        print(st, "PIR Alarm Skipped", file=sys.stderr)
+        print(st, "Skipped (", old, 'sec ago)', file=sys.stderr)
 
 last = 0
 while True:
-    GPIO.wait_for_edge(pir, GPIO.RISING)
-    alarm()
+    alarm(GPIO.wait_for_edge(pir, GPIO.RISING)
 
 GPIO.cleanup()
 
