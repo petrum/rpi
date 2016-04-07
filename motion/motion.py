@@ -33,7 +33,9 @@ def alarm():
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     if ts - last > 30:
         last = ts
-        result = os.system("echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
+        if len(sys.argv) > 1:
+            cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + ''.join([sys.argv[1:])
+            os.system(cmd)
         print(st, "PIR ALARM!", file=sys.stderr)
     else:
         print(st, "PIR Alarm Skipped", file=sys.stderr)
