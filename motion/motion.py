@@ -30,17 +30,18 @@ GPIO.setup(pir, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 def alarm():
     ts = time.time()
     global last
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     if ts - last > 30:
         last = ts
-        st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-        #result = os.system("echo PIR motion detection at " + st + " | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no petrum@192.168.1.5 mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
         result = os.system("echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' petru.marginean@gmail.com")
         print(st, "PIR ALARM!", file=sys.stderr)
+    else:
+        print(st, "PIR Alarm Skipped", file=sys.stderr)
 
 last = 0
 while True:
-    if GPIO.input(pir):
-        alarm()
+    GPIO.wait_for_edge(pir, GPIO.RISING)
+    alarm()
 
 GPIO.cleanup()
 
