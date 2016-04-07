@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LOG=/root/setup.log
+date >> $LOG
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then
     echo "No IP..."
@@ -8,16 +10,17 @@ fi
 echo "IP = $ip"
 
 DONE=/root/setup.done
+
 if [[ -f $DONE ]]; then
     echo "Everything looks fine already..."
     exit 0
 fi
-if ! apt-get update --fix-missing >/dev/null 2>&1 ; then
+if ! apt-get update --fix-missing >> $LOG 2>&1 ; then
    echo 'Failed to update...'
    exit 2
 fi
    
-if ! apt-get install ssmtp mailutils vim -y >/dev/null 2>&1 ; then
+if ! apt-get install ssmtp mailutils vim -y >> $LOG 2>&1 ; then
     echo 'Failed to install...'
     exit 3
 fi
