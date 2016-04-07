@@ -35,7 +35,7 @@ def alarm():
         last = ts
         print(st, "PIR ALARM!", file=sys.stderr)
         if len(sys.argv) > 1:
-            addresses = ' '.join(sys.argv[1:])
+            addresses = ' '.join(sys.argv[1])
             cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + addresses
             os.system(cmd)
             print(st, "Sent email to", addresses, file=sys.stderr)
