@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG=/root/setup.log
+LOG=/root/motion-setup.log
 date >> $LOG
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then

@@ -1,6 +1,7 @@
 #!/bin/bash
-LOG=/root/setup.log
-echo >> $LOG
+LOG=/root/weather-setup.log
+date >> $LOG
+
 DISPLAY=/home/pi/git/rpi/weather/display.py
 
 $DISPLAY connect please wait...
