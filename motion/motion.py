@@ -32,8 +32,9 @@ def alarm(p):
     global last
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     print(st, "PIR ALARM! (channel =", p, ")",file=sys.stderr)
-    old = int(ts - last)
-    if old > 30:
+    ago = int(ts - last)
+    limit = 30
+    if ago > limit:
         last = ts
         if len(sys.argv) > 1:
             address = sys.argv[1]
@@ -41,7 +42,7 @@ def alarm(p):
             os.system(cmd)
             print(st, "Sent email to", address, file=sys.stderr)
     else:
-        print(st, "Skipped (", old, 'sec ago )', file=sys.stderr)
+        print(st, "Skipped (", ago, 'sec ago <', limit, ')', file=sys.stderr)
 
 last = 0
 while True:
