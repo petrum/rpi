@@ -42,7 +42,7 @@ def alarm(p):
             os.system(cmd)
             print(st, "Sent email to", address, file=sys.stderr)
     else:
-        print(st, "Skipped (", ago, 'sec ago <', limit, ')', file=sys.stderr)
+        print(st, "Skipped (", ago, 'sec ago <', limit, 'sec )', file=sys.stderr)
 
 last = 0
 while True:
