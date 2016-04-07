@@ -31,7 +31,7 @@ def alarm(p):
     ts = time.time()
     global last
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-    print(st, "PIR ALARM!", p, file=sys.stderr)
+    print(st, "PIR ALARM! (channel =", p, ")",file=sys.stderr)
     old = int(ts - last)
     if old > 30:
         last = ts
