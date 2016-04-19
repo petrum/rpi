@@ -1,49 +1,42 @@
 #!/usr/bin/env python
 from __future__ import print_function
-
-from urllib2 import urlopen
-from xml.dom.minidom import parse
-import time
 import sys
-import os
+import urllib2, urllib, json
 
-WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
-METRIC_PARAMETER = '&u=c'
-WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
-
-def get_weather(zipCode, days, metric):
-    url = WEATHER_URL % zipCode
-    if metric:
-        url += METRIC_PARAMETER
-    #print(url)
-    dom = parse(urlopen(url))
+def get_weather(w, days, metric):
+    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    yql_query = "select * from weather.forecast where woeid=" + str(w)
+    yql_url = baseurl + urllib.urlencode({'q' : yql_query}) + "&format=json"
+    result = urllib2.urlopen(yql_url).read()
+    data = json.loads(result)
+    channel = data['query']['results']['channel']
+    res = channel['item']
+    condition = res['condition']
+    units = channel['units']
+    location = channel['location']
+    astronomy = channel['astronomy']
     forecasts = []
-    for i, node in enumerate(dom.getElementsByTagNameNS(WEATHER_NS, 'forecast')):
+    for i, f in enumerate(res['forecast']):
         if i >= days:
             break
         else:
             forecasts.append({
-                'date': node.getAttribute('date'),
-                'low': node.getAttribute('low'),
-                'high': node.getAttribute('high'),
-                'day': node.getAttribute('day'),
-                'condition': node.getAttribute('text')
+                'date': f['date'],
+                'low': f['low'],
+                'high': f['high'],
+                'day': f['day'],
+                'condition': f['text'],
             })
-    units = dom.getElementsByTagNameNS(WEATHER_NS, 'units')[0]
-    location = dom.getElementsByTagNameNS(WEATHER_NS, 'location')[0]
-    condition = dom.getElementsByTagNameNS(WEATHER_NS, 'condition')[0]
-    astronomy = dom.getElementsByTagNameNS(WEATHER_NS, 'astronomy')[0]
-
     d = {
-        'condition': condition.getAttribute('text'),
-        'when': condition.getAttribute('date'),
-        'temp': condition.getAttribute('temp'),
+        'condition': condition['text'],
+        'when': condition['date'],
+        'temp': condition['temp'],
         'forecasts': forecasts,
-        'units': units.getAttribute('temperature'),
-        'city': location.getAttribute('city'),
-        'region': location.getAttribute('region'),
-        'sunrise': astronomy.getAttribute('sunrise'),
-        'sunset': astronomy.getAttribute('sunset'),
+        'units': units['temperature'],
+        'city': location['city'],
+        'region': location['region'],
+        'sunrise': astronomy['sunrise'],
+        'sunset': astronomy['sunset'],
     }
     return d
 
@@ -79,4 +72,3 @@ if len(sys.argv) >= 5:
 
 for line in format_weather(w):
     print(line, file=f)
-
