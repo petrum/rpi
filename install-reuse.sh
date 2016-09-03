@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 trap "exit 1" TERM
 
@@ -81,10 +81,11 @@ function mountFS()
 function umountFS()
 {
     local MOUNTED=$1
+    sync
+    sleep 1
     sudo umount "$MOUNTED"
     rm -r "$MOUNTED"
     echo "Unmounted and removed '$MOUNTED'" 1>&2
-    sync
 }
 
 function dynamic_ip()
@@ -115,6 +116,7 @@ function static_ip()
 function generic_setup()
 {
     local DEST=$1
+    local READER=$2
     rm -fr $DEST/home/pi/.ssh
     mkdir $DEST/home/pi/.ssh
     cat ~/.ssh/id_rsa.pub >> $DEST/home/pi/.ssh/authorized_keys
@@ -126,8 +128,11 @@ function generic_setup()
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
     
-    sudo cp -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
-    sudo cp -v ~/rpi-private/wpa_supplicant.conf $DEST/etc/wpa_supplicant
+    sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    local BOOT=$(mountFS $READER 1)
+    sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf
+    umountFS $BOOT
+    sudo ln -s /boot/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf
 }
 
 function sethostname()
@@ -149,8 +154,9 @@ function sethostname()
 
 function enable_spi()
 {
-    local DEST=$1
-    sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $DEST/config.txt
+    local BOOT=$(mountFS $READER 1)
+    sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $BOOT/config.txt
+    umountFS $BOOT
 }
 
 function get_MAX7219array()

@@ -3,11 +3,9 @@
 READER=$(selectMicroSD)
 diskcopy /home/petrum/Downloads/2016-03-18-raspbian-jessie-lite.img $READER
 expandFS $READER
-BOOT=$(mountFS $READER 1)
-enable_spi $BOOT
-umountFS $BOOT
+enable_spi
 DEST=$(mountFS $READER 2)
-generic_setup $DEST
+generic_setup $DEST $READER
 dynamic_ip 192.168.1.1 255.255.255.0 $DEST 
 sethostname weather $DEST
 get_MAX7219array $DEST 7
