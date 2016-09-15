@@ -43,7 +43,7 @@ def get_weather(w, days, metric):
 def format_weather(w): 
     units = w['units']
     ret = []
-    ret.append("Current {0}".format(w['when']))
+    ret.append("Weather as of {0}".format(w['when']))
     ret.append("{1}{2} and {0} in {3} {4}".format(w['condition'], w['temp'], units, w['city'], w['region'], w['when']))
     ret.append("The sun rises at {0} and sunsets at {1}".format(w['sunrise'], w['sunset']))
     ret.append("Forecast:")
