@@ -130,7 +130,7 @@ function generic_setup()
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
     
-    #sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
     local BOOT=$(mountFS $READER 1)
     sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf
     umountFS $BOOT
