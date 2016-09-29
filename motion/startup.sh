@@ -10,5 +10,5 @@ HOST=$(hostname)
 IP=$(hostname -I)
 (date; echo "$HOST $IP") | mail -s "RPI motion started" "$@"
 sync
-./motion.py "$@"
+./motion.py "$@" >> /home/pi/motion.log 2>&1
 
