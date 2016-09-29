@@ -4,6 +4,9 @@ date >> $LOG
 
 DISPLAY=/home/pi/git/rpi/weather2/display.py
 
+cd /home/pi/max7219
+python setup.py install
+
 $DISPLAY connect please wait...
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then
@@ -40,10 +43,6 @@ if ! pip install spidev >> $LOG 2>&1 ; then
     exit 3
 fi
 
-cd /home/pi/max7219
-
-python setup.py install
- 
 $DISPLAY setup done
 touch $DONE
 exit 0
