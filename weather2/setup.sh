@@ -16,6 +16,7 @@ echo $ip | $DISPLAY
 $DISPLAY git upgrade please wait...
 cd /home/pi/git/rpi
 git pull
+
 DONE=/root/setup.done
 if [[ -f $DONE ]] ; then
     $DISPLAY all looks fine already
@@ -38,6 +39,10 @@ if ! pip install spidev >> $LOG 2>&1 ; then
     $DISPLAY failed to install spidev
     exit 3
 fi
+
+cd /home/pi/max7219
+
+python setup.py install
  
 $DISPLAY setup done
 touch $DONE

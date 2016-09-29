@@ -167,3 +167,13 @@ function get_MAX7219array()
     git clone https://github.com/JonA1961/MAX7219array.git $DEST/home/pi/MAX7219array
     sed -i "s/NUM_MATRICES = 8/NUM_MATRICES = $NUM/g" $DEST/home/pi/MAX7219array/MAX7219array.py
 }
+
+function get_max7219()
+{
+    local DEST=$1
+    local NUM=$2
+    rm -fr $DEST/home/pi/max7219
+    git clone https://github.com/rm-hull/max7219.git $DEST/home/pi/max7219
+}
+
+
