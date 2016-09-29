@@ -11,6 +11,6 @@ generic_setup $DEST
 dynamic_ip 192.168.1.1 255.255.255.0 $DEST 
 sethostname weather $DEST
 get_max7219 DEST 7
-sudo sed -i 's|^exit 0|/home/pi/git/rpi/weather/startup.sh >> /root/weather.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
+sudo sed -i 's|^exit 0|/home/pi/git/rpi/weather2/startup.sh >> /root/weather.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
 umountFS $DEST
 

@@ -2,7 +2,7 @@
 LOG=/root/weather-setup.log
 date >> $LOG
 
-DISPLAY=/home/pi/git/rpi/weather/display.py
+DISPLAY=/home/pi/git/rpi/weather2/display.py
 
 $DISPLAY connect please wait...
 ip=$(hostname -I) || true

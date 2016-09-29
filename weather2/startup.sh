@@ -1,6 +1,5 @@
 #!/bin/bash
-cd /home/pi/git/rpi/weather
-export PYTHONPATH=/home/pi/MAX7219array
+cd /home/pi/git/rpi/weather2
 
 echo "Started at " $(date)
 while ! /bin/bash ./setup.sh ; do
@@ -12,7 +11,7 @@ sync
 crontab -u pi crontab
 while :
 do
-    cat /home/pi/weather.txt | /home/pi/git/rpi/weather/display.py
+    cat /home/pi/weather.txt | /home/pi/git/rpi/weather2/display.py
     sleep 1
 done
 
