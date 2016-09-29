@@ -80,6 +80,7 @@ function mountFS()
 
 function umountFS()
 {
+    echo "******** umountFS $1"
     local MOUNTED=$1
     sync
     sleep 1
@@ -115,6 +116,7 @@ function static_ip()
 
 function generic_setup()
 {
+    echo "******** generic_setup $1 $2"
     local DEST=$1
     local READER=$2
     rm -fr $DEST/home/pi/.ssh
@@ -128,7 +130,7 @@ function generic_setup()
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
     
-    sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    #sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
     local BOOT=$(mountFS $READER 1)
     sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf
     umountFS $BOOT
@@ -154,6 +156,7 @@ function sethostname()
 
 function enable_spi()
 {
+    echo "******** enable_spi"
     local BOOT=$(mountFS $READER 1)
     sudo sed -i 's|#dtparam=spi=on|dtparam=spi=on|g' $BOOT/config.txt
     umountFS $BOOT
