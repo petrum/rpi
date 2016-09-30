@@ -8,7 +8,7 @@ import fileinput
 
 device = led.matrix(cascaded=8)
 device.orientation(90)
-device.brightness(5)
+device.brightness(3)
 
 if len(sys.argv) == 1:
   for line in sys.stdin:
