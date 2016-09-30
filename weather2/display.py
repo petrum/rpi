@@ -11,7 +11,7 @@ device.orientation(90)
 
 if len(sys.argv) == 1:
   for line in sys.stdin:
-    device.show_message(line.rstrip('\n'), delay=.008)
+    device.show_message(line.rstrip('\n'), delay=.005)
   sys.exit(0)
 print sys.argv
 for word in sys.argv[1:]:
