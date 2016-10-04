@@ -12,8 +12,8 @@ device.brightness(3)
 
 if len(sys.argv) == 1:
   for line in sys.stdin:
-    device.clear()
-    device.show_message(line.rstrip('\n'), delay=.003)
+    #device.clear()
+    device.show_message(line.rstrip('\n'), delay=.004)
   sys.exit(0)
 print sys.argv
 for word in sys.argv[1:]:
