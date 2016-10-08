@@ -174,7 +174,6 @@ function get_MAX7219array()
 function get_max7219()
 {
     local DEST=$1
-    local NUM=$2
     rm -fr $DEST/home/pi/max7219
     git clone https://github.com/rm-hull/max7219.git $DEST/home/pi/max7219
 }
