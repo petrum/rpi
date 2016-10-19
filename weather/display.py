@@ -10,7 +10,7 @@ if len(sys.argv) == 1:
     for line in sys.stdin:
         m7219.init()
         m7219.brightness(1)
-        m7219.scroll_message_horiz(line.rstrip(), 1, 9, DIR_L, CP437_FONT)
+        m7219.scroll_message_horiz(line.rstrip(), 1, 8, DIR_L, CP437_FONT)
         m7219.clear_all()
         #print(line)
     sys.exit(0)
