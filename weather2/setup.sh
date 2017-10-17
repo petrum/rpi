@@ -3,11 +3,6 @@ LOG=/root/weather-setup.log
 date >> $LOG
 
 DISPLAY=/home/pi/git/rpi/weather2/display.py
-apt-get update
-apt-get install -y libjpeg-dev
-pip install --upgrade pip
-pip install --upgrade setuptools
-pip install Pillow
 cd /home/pi/max7219
 python setup.py install
 
