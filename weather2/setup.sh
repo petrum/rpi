@@ -3,9 +3,9 @@ LOG=/root/weather-setup.log
 date >> $LOG
 
 DISPLAY=/home/pi/git/rpi/weather2/display.py
-
+sudo pip install --upgrade setuptools
 cd /home/pi/max7219
-python setup.py install
+sudo python setup.py install
 
 $DISPLAY connect please wait...
 ip=$(hostname -I) || true
