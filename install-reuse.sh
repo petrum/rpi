@@ -43,7 +43,7 @@ function diskcopy()
     date
     local BEGIN=$(date +%s)
     echo "dd $IN $OUT"
-    sudo dcfldd bs=4M if="$IN" of="/dev/$OUT"
+    sudo dd bs=4M if="$IN" of="/dev/$OUT" status=progress
     local END=$(date +%s)
     local ELAPSED=$((END - BEGIN))
     local MIN=$((ELAPSED / 60))
