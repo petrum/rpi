@@ -12,5 +12,5 @@ device.orientation(90)
 device.brightness(3)
 
 while True:
-    device.show_message(datetime.datetime.now().strftime('%H:%M:%S'), delay=.004)
+    device.show_message(datetime.datetime.now().strftime('%H:%M:%S'), delay=0)
 
