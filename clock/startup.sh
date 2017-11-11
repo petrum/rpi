@@ -11,6 +11,6 @@ sync
 while :
 do
     date +"%T" | /home/pi/git/rpi/clock/display.py
-    #sleep 1
+    sleep 1
 done
 
