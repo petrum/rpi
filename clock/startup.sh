@@ -8,10 +8,9 @@ while ! /bin/bash ./setup.sh ; do
 done
 echo "Done at " $(date)
 sync
-crontab -u pi crontab
 while :
 do
-    cat /home/pi/clock.txt | /home/pi/git/rpi/clock/display.py
-    sleep 1
+    #cat /home/pi/clock.txt | /home/pi/git/rpi/clock/display.py
+    #sleep 1
 done
 
