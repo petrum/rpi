@@ -96,8 +96,11 @@ function dynamic_ip()
     local DEST=$3
     local CFG="$DEST/etc/network/interfaces"
     sudo cp -v $CFG "$CFG.bak"
-    echo "netmask $MASK" | sudo tee -a $CFG
-    echo "gateway $GW" | sudo tee -a $CFG
+    #echo "netmask $MASK" | sudo tee -a $CFG
+    #echo "gateway $GW" | sudo tee -a $CFG
+    echo "allow-hotplug wlan0" | sudo tee -a $CFG
+    echo "iface wlan0 inet manual" | sudo tee -a $CFG
+    echo "    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf" | sudo tee -a $CFG
 }
 
 #http://sizious.com/2015/08/28/setting-a-static-ip-on-raspberry-pi-on-raspbian-20150505/
@@ -133,6 +136,7 @@ function generic_setup()
     sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
     local BOOT=$(mountFS $READER 1)
     sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf
+    sudo touch $BOOT/ssh
     umountFS $BOOT
     sudo ln -s /boot/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf
 }

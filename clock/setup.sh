@@ -6,6 +6,8 @@ DISPLAY=/home/pi/git/rpi/clock/display.py
 cd /home/pi/max7219
 python setup.py install
 
+systemctl enable wpa_supplicant.service
+
 $DISPLAY connect please wait...
 ip=$(hostname -I) || true
 if [ ! "$ip" ]; then

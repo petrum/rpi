@@ -8,6 +8,7 @@ diskcopy /home/petrum/raspbian.img/2017-09-07-raspbian-stretch-lite.img $READER
 enable_spi
 DEST=$(mountFS $READER 2)
 generic_setup $DEST $READER 
+
 dynamic_ip 192.168.1.1 255.255.255.0 $DEST 
 sethostname clock $DEST
 get_max7219 $DEST
