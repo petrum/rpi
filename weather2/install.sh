@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 . "$(dirname $0)/../install-reuse.sh"
 READER=$(selectMicroSD)
 diskcopy /home/petrum/Downloads/2016-09-23-raspbian-jessie-lite.img $READER
