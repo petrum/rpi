@@ -20,7 +20,8 @@ while True:
     t = datetime.datetime.now().strftime('%H:%M:%S')
     if t[-2:] == '00':
         isConnected = connected.test()
-    t.replace(':', ';')
+    if not isConnected:
+        t = t.replace(':', ';')
     if last == t:
         continue
     #print t
