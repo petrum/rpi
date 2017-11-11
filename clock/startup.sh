@@ -10,7 +10,7 @@ echo "Done at " $(date)
 sync
 while :
 do
-    #cat /home/pi/clock.txt | /home/pi/git/rpi/clock/display.py
+    date +"%T" | /home/pi/git/rpi/clock/display.py
     #sleep 1
 done
 
