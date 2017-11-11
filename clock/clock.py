@@ -11,5 +11,5 @@ device = led.matrix(cascaded=8)
 device.orientation(90)
 device.brightness(3)
 
-print time.strftime("%Y-%m-%d %H:%M:%S", datetime.datetime.now())
+print datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
   
