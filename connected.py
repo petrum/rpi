@@ -17,5 +17,5 @@ def is_connected():
      pass
   return False
 
-sys.exit(0 if is_connected() else -1)
-
+if __name__ == '__main__':
+    sys.exit(0 if is_connected() else -1)
