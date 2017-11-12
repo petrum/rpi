@@ -43,7 +43,8 @@ function diskcopy()
     date
     local BEGIN=$(date +%s)
     echo "dd $IN $OUT"
-    sudo dd bs=4M if="$IN" of="/dev/$OUT" status=progress
+    SIZE=$(stat -c "%s")
+    dd if="$IN" bs=4M | pv -s $SIZE | sudo dd of="/dev/$OUT"
     local END=$(date +%s)
     local ELAPSED=$((END - BEGIN))
     local MIN=$((ELAPSED / 60))
@@ -133,12 +134,14 @@ function generic_setup()
     mkdir -p $RPI
     git clone https://github.com/petrum/rpi.git $RPI
     
-    sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
+    #sudo mv -v $DEST/etc/wpa_supplicant/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf.bak
     local BOOT=$(mountFS $READER 1)
     sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf
+    sudo cp -v ~/rpi-private/wpa_supplicant.conf $BOOT/wpa_supplicant.conf.bak
+
     sudo touch $BOOT/ssh
     umountFS $BOOT
-    sudo ln -s /boot/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf
+    #sudo ln -s /boot/wpa_supplicant.conf $DEST/etc/wpa_supplicant/wpa_supplicant.conf
 }
 
 function sethostname()
