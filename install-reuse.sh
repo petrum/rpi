@@ -43,8 +43,8 @@ function diskcopy()
     date
     local BEGIN=$(date +%s)
     echo "dd $IN $OUT"
-    SIZE=$(stat -c "%s" "$IN")
-    dd if="$IN" bs=4M | pv -s $SIZE | sudo dd of="/dev/$OUT"
+    #SIZE=$(stat -c "%s" "$IN")
+    sudo dd if="$IN" bs=4M of="/dev/$OUT"
     local END=$(date +%s)
     local ELAPSED=$((END - BEGIN))
     local MIN=$((ELAPSED / 60))
