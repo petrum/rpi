@@ -17,6 +17,7 @@ device.brightness(3)
 isConnected = connected.test()
 last = ''
 while True:
+    time.sleep(.05)
     t = datetime.datetime.now().strftime('%H:%M:%S')
     if t[-2:] == '00':
         isConnected = connected.test()
