@@ -25,6 +25,7 @@ while True:
         t = t.replace(':', ';')
     if last == t:
         continue
+    device.invert((t > '09:29:50' and t < '09:30:00') or (t > '15:59:50' and t < '16:00:00'))
     #print t
     device.show_message(t, delay=0)
     last = t
