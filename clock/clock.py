@@ -20,7 +20,7 @@ inverted = False
 while True:
     time.sleep(.05)
     t = datetime.datetime.now().strftime('%H:%M:%S')
-    if t[-2:] == '00':
+    if t[-4:] == '0:00':
         isConnected = connected.test()
     if not isConnected:
         t = t.replace(':', ';')
