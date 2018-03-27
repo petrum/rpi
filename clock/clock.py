@@ -31,7 +31,8 @@ while True:
         isConnected = connected.test()
     if not isConnected:
         t = t.replace(':', ';')
-        isConnected = connected.test()
+        if t[-1:] == '0':
+            isConnected = connected.test()
         
     #device.invert(inverted)
     #print t
