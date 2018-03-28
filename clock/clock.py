@@ -6,15 +6,25 @@ import sys
 import time
 import fileinput
 import datetime
+import socket
+
+REMOTE_SERVER = "www.google.com"
+def is_connected():
+  try:
+    host = socket.gethostbyname(REMOTE_SERVER)
+    s = socket.create_connection((host, 80), 2)
+    return True
+  except:
+     pass
+  return False
 
 sys.path.insert(0, '..')
-import connected
 
 device = led.matrix(cascaded=8)
 device.orientation(90)
 device.brightness(3)
 
-isConnected = connected.test()
+isConnected = is_connected()
 last = ''
 inverted = False
 while True:
@@ -22,19 +32,20 @@ while True:
     t = datetime.datetime.now().strftime('%H:%M:%S')
     if last == t:
         continue
+    
     if (t > '09:29:50' and t < '09:30:00') or (t > '15:59:50' and t < '16:00:00'):
         inverted = not inverted
     else:
         inverted = False
 
     if t[-2:] == '00':
-        isConnected = connected.test()
+        isConnected = is_connected()
     if not isConnected:
         t = t.replace(':', ';')
         if t[-1:] == '0':
-            isConnected = connected.test()
+            isConnected = is_connected()
         
-    #device.invert(inverted)
+    device.invert(inverted)
     #print t
     device.show_message(t, delay=0)
     last = t
