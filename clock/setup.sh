@@ -22,7 +22,8 @@ echo $ip | $DISPLAY
 
 $DISPLAY git upgrade please wait...
 cd /home/pi/git/rpi
-git pull
+git fetch --all
+git reset --hard origin/master
 
 DONE=/root/setup.done
 if [[ -f $DONE ]] ; then
