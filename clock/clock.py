@@ -13,6 +13,7 @@ def is_connected():
   try:
     host = socket.gethostbyname(REMOTE_SERVER)
     s = socket.create_connection((host, 80), 2)
+    s.close()
     return True
   except:
      pass
