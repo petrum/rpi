@@ -44,7 +44,7 @@ while True:
     if not isConnected:
         if t[-1:] == '0':
             isConnected = is_connected()
-            t = t.replace(':', ';')
+            #t = t.replace(':', ';')
         
     device.invert(inverted)
     #print t
