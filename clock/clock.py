@@ -10,6 +10,7 @@ import socket
 
 REMOTE_SERVER = "www.google.com"
 def is_connected():
+  return True
   try:
     host = socket.gethostbyname(REMOTE_SERVER)
     s = socket.create_connection((host, 80), 2)
@@ -44,8 +45,7 @@ while True:
     if not isConnected:
         if t[-1:] == '0':
             isConnected = is_connected()
-            #t = t.replace(':', ';')
-        
+            t = t.replace(':', ';')
     device.invert(inverted)
     #print t
     device.show_message(t, delay=0)
