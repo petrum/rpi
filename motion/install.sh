@@ -1,7 +1,7 @@
 #!/bin/bash
 . "$(dirname $0)/../install-reuse.sh"
 READER=$(selectMicroSD)
-diskcopy /home/petrum/raspbian.img/2017-09-07-raspbian-stretch-lite.img $READER
+diskcopy /home/petrum/raspbian.img/2021-05-07-raspios-buster-armhf-lite.img $READER
 DEST=$(mountFS $READER 2)
 generic_setup $DEST $READER
 sethostname motion $DEST
