@@ -7,6 +7,6 @@ generic_setup $DEST $READER
 sethostname motion $DEST
 dynamic_ip 10.0.0.1 255.255.255.0 $DEST
 sudo sed -i 's|^exit 0|/home/pi/git/rpi/motion/startup.sh petru.marginean@gmail.com >> /root/motion.log 2>\&1\nexit 0|g' $DEST/etc/rc.local
-sudo cp -v /home/petrum/rpi-private/ssmtp.conf $DEST/home/pi/ssmtp.conf
+sudo cp -v /home/petrum/rpi-private/msmtprc $DEST/home/pi
 umountFS $DEST
 

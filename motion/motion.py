@@ -38,7 +38,7 @@ def alarm(p):
         last = ts
         if len(sys.argv) > 1:
             address = sys.argv[1]
-            cmd = "echo PIR motion detection at " + st + " | mail -s 'motion detected on " + socket.gethostname() + "' " + address
+            cmd = "echo -e Subject: motion detected on '" + socket.gethostname() + "' " + address + "\r\n\r\nPIR motion detection at " + st + " | /usr/bin/msmtp " + address
             os.system(cmd)
             print(st, "Sent email to", address, file=sys.stderr)
     else:

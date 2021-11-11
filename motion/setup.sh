@@ -20,14 +20,17 @@ if ! apt-get update --fix-missing >> $LOG 2>&1 ; then
    exit 2
 fi
    
-if ! apt-get install ssmtp mailutils vim -y >> $LOG 2>&1 ; then
+if ! apt-get install msmtprc mailutils vim -y >> $LOG 2>&1 ; then
     echo 'Failed to install...'
     exit 3
 fi
-if ! cat /home/pi/ssmtp.conf >> /etc/ssmtp/ssmtp.conf ; then
-    echo 'Failed to add credentials...'
+if ! cat /home/pi/msmtprc >> /etc/msmtprc ; then
+    echo 'Failed to copy msmtprc file...'
     exit 4
 fi
+
+echo -e "Subject: motion setup from $ip\r\n\r\nThe setup is complete" | /usr/bin/msmtp petru.marginean@gmail.com
+
 echo 'All setup'
 touch $DONE
 exit 0

@@ -8,7 +8,7 @@ done
 echo "Done at " $(date)
 HOST=$(hostname)
 IP=$(hostname -I)
-(date; echo "$HOST $IP") | mail -s "RPI motion started" "$@"
+(echo -e "Subject: RPI motion started\r\n\r\n"; date; echo "$HOST $IP") | /usr/bin/msmtp "$@"
 sync
 ./motion.py "$@" >> /home/pi/motion.log 2>&1
 
