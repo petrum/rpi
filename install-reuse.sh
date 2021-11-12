@@ -189,7 +189,7 @@ function wait4Net()
 {
     local DEST=$1
     mkdir -p $DEST/etc/systemd/system/dhcpcd.service.d
-    cat | sudo tee $DEST/etc/systemd/system/dhcpcd.service.d/wait.conf << EOF
+    cat << EOF | sudo tee $DEST/etc/systemd/system/dhcpcd.service.d/wait.conf
 [Service]
 ExecStart=
 ExecStart=/usr/lib/dhcpcd5/dhcpcd -q -w
