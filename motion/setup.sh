@@ -1,5 +1,7 @@
 #!/bin/bash
 
+/usr/bin/raspi-config nonint do_boot_wait 0
+
 LOG=/root/motion-setup.log
 date >> $LOG
 ip=$(hostname -I) || true
@@ -19,8 +21,8 @@ if ! apt-get update --fix-missing >> $LOG 2>&1 ; then
    echo 'Failed to update...'
    exit 2
 fi
-   
-if ! apt-get install msmtprc mailutils vim -y >> $LOG 2>&1 ; then
+
+if ! apt-get install msmtp vim -y >> $LOG 2>&1 ; then
     echo 'Failed to install...'
     exit 3
 fi
