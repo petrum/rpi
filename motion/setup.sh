@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/bin/raspi-config nonint do_boot_wait 0
+#/usr/bin/raspi-config nonint do_boot_wait 0
 
 LOG=/root/motion-setup.log
 date >> $LOG

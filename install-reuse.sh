@@ -185,4 +185,13 @@ function get_max7219()
     git clone https://github.com/petrum/max7219.git $DEST/home/pi/max7219
 }
 
-
+function wait4Net()
+{
+    local DEST=$1
+    mkdir -p $DEST/etc/systemd/system/dhcpcd.service.d
+    cat > $DEST/etc/systemd/system/dhcpcd.service.d/wait.conf << EOF
+[Service]
+ExecStart=
+ExecStart=/usr/lib/dhcpcd5/dhcpcd -q -w
+EOF
+}
