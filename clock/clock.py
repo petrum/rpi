@@ -68,4 +68,3 @@ while True:
     #print t
     device.show_message(t, delay=0)
     last = t
-
