@@ -57,7 +57,7 @@ while True:
 
     if onTheMinute(t):
         isConnected = is_connected()
-        #setBrigthness(t)
+        setBrigthness(t)
 
     if not isConnected:
         t = replace(t, 5, ';')
