@@ -54,10 +54,10 @@ while True:
 
     breath = int(datetime.datetime.now().strftime('%s')) % 9    
     device.invert(aboutOpen(t) or aboutClose(t))
-
+    device.brightness(int(t[-1]))
     if onTheMinute(t):
         isConnected = is_connected()
-        setBrigthness(t)
+        #setBrigthness(t)
 
     if not isConnected:
         t = replace(t, 5, ';')
