@@ -42,7 +42,7 @@ sys.path.insert(0, '..')
 
 device = led.matrix(cascaded=8)
 device.orientation(90)
-device.brightness(3)
+device.brightness(1)
 
 isConnected = is_connected()
 last = ''
@@ -54,10 +54,10 @@ while True:
 
     breath = int(datetime.datetime.now().strftime('%s')) % 9    
     device.invert(aboutOpen(t) or aboutClose(t))
-    
+
     if onTheMinute(t):
         isConnected = is_connected()
-        setBrigthness(t)
+        #setBrigthness(t)
 
     if not isConnected:
         t = replace(t, 5, ';')
