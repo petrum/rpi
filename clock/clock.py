@@ -20,6 +20,9 @@ def is_connected():
      pass
   return False
 
+def replace(s, i, c):
+    return s[0:i] + c + s[i + 1:]
+
 sys.path.insert(0, '..')
 
 device = led.matrix(cascaded=8)
@@ -49,9 +52,9 @@ while True:
             t = t.replace(':', ';')
     device.invert(inverted)
     if breath == 0:
-        t[2] = '*'
+        t = replace(t, 2, '*')
     if breath == 04:
-        t[5] = '*'
+        t = replace(t, 5, '*')
     #device.invert(True)
     #print t
     device.show_message(t, delay=0)
