@@ -32,7 +32,7 @@ inverted = False
 while True:
     time.sleep(.05)
     t = datetime.datetime.now().strftime('%H:%M:%S')
-    breath = datetime.datetime.now().total_seconds() % 9
+    breath = int(datetime.datetime.now().strftime('%s')) % 9
     if last == t:
         continue
     
