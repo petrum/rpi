@@ -51,9 +51,9 @@ while True:
             isConnected = is_connected()
             t = t.replace(':', ';')
     device.invert(inverted)
-    if breath == 0:
+    if breath < 4:
         t = replace(t, 2, ';')
-    if breath == 4:
+    if breath >= 4:
         t = replace(t, 5, ';')
     #device.invert(True)
     #print t
