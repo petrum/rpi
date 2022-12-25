@@ -53,8 +53,8 @@ while True:
     device.invert(inverted)
     if breath < 4:
         t = replace(t, 2, ';')
-    if breath >= 4:
-        t = replace(t, 5, ';')
+    #if breath >= 4:
+    #    t = replace(t, 5, ';')
     #device.invert(True)
     #print t
     device.show_message(t, delay=0)
