@@ -52,7 +52,7 @@ while True:
             t = t.replace(':', ';')
     device.invert(inverted)
     if breath < 4:
-        t = replace(t, 2, ';')
+        t = replace(t, 2, '.')
     #if breath >= 4:
     #    t = replace(t, 5, ';')
     #device.invert(True)
