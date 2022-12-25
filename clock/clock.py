@@ -5,7 +5,6 @@ import max7219.font as font
 import sys
 import time
 import fileinput
-import datetime
 import socket
 
 REMOTE_SERVER = "www.google.com"
@@ -46,7 +45,8 @@ while True:
         if t[-1:] == '0':
             isConnected = is_connected()
             t = t.replace(':', ';')
-    device.invert(inverted)
+    #device.invert(inverted)
+    device.invert(True)
     #print t
     device.show_message(t, delay=0)
     last = t
