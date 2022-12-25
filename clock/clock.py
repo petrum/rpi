@@ -32,6 +32,7 @@ inverted = False
 while True:
     time.sleep(.05)
     t = datetime.datetime.now().strftime('%H:%M:%S')
+    breath = datetime.datetime.now().total_seconds() % 9
     if last == t:
         continue
     
@@ -47,6 +48,10 @@ while True:
             isConnected = is_connected()
             t = t.replace(':', ';')
     device.invert(inverted)
+    if breath == 0:
+        t[2] = '*'
+    if breath == 04:
+        t[5] = '*'
     #device.invert(True)
     #print t
     device.show_message(t, delay=0)
