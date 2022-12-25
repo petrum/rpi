@@ -45,8 +45,8 @@ while True:
         if t[-1:] == '0':
             isConnected = is_connected()
             t = t.replace(':', ';')
-    #device.invert(inverted)
-    device.invert(True)
+    device.invert(inverted)
+    #device.invert(True)
     #print t
     device.show_message(t, delay=0)
     last = t
