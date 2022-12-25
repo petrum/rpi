@@ -6,6 +6,7 @@ import sys
 import time
 import fileinput
 import socket
+import datetime
 
 REMOTE_SERVER = "www.google.com"
 def is_connected():
