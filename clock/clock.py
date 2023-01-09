@@ -38,6 +38,11 @@ def setBrigthness(t):
 def onTheMinute(t):
     return t[-2:] == '00'
 
+def breathing(s, n):
+    if n > 4:
+        s = replace(s, 2, '.')
+    return s
+
 sys.path.insert(0, '..')
 
 device = led.matrix(cascaded=8)
@@ -62,8 +67,7 @@ while True:
     if not isConnected:
         t = replace(t, 5, ';')
 
-    if breath >= 4:
-        t = replace(t, 2, '.')
+    t = breathing(t, breath)
 
     #print t
     device.show_message(t, delay=0)
