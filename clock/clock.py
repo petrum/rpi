@@ -42,11 +42,11 @@ def breathing(s, b):
     n = b % 9
     if n == 0:
         s = replace(s, 2, '.')
-        s = replace(s, 5, ':')
+        s = replace(s, 5, ' ')
         return s
     if n == 1:
-        s = replace(s, 2, ':')
-        s = replace(s, 5, ':')
+        s = replace(s, 2, '.')
+        s = replace(s, 5, '.')
         return s
     if n == 2:
         s = replace(s, 2, '.')
@@ -57,24 +57,24 @@ def breathing(s, b):
         s = replace(s, 5, ':')
         return s
     if n == 4:
-        s = replace(s, 2, ':')
-        s = replace(s, 5, '.')
+        s = replace(s, 2, ' ')
+        s = replace(s, 5, ' ')
         return s
     if n == 5:
-        s = replace(s, 2, ':')
-        s = replace(s, 5, ':')
+        s = replace(s, 2, ' ')
+        s = replace(s, 5, '.')
         return s
     if n == 6:
-        s = replace(s, 2, ':')
+        s = replace(s, 2, '.')
         s = replace(s, 5, '.')
         return s
     if n == 7:
         s = replace(s, 2, ':')
-        s = replace(s, 5, ':')
+        s = replace(s, 5, '.')
         return s
     if n == 8:
         s = replace(s, 2, ':')
-        s = replace(s, 5, '.')
+        s = replace(s, 5, ';')
         return s
     return s
 
