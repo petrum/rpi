@@ -38,9 +38,44 @@ def setBrigthness(t):
 def onTheMinute(t):
     return t[-2:] == '00'
 
-def breathing(s, n):
-    if n > 4:
+def breathing(s, b):
+    n = b % 9
+    if n == 0:
         s = replace(s, 2, '.')
+        s = replace(s, 5, ' ')
+        return s
+    if n == 1:
+        s = replace(s, 2, ':')
+        s = replace(s, 5, ' ')
+        return s
+    if n == 2:
+        s = replace(s, 2, ':')
+        s = replace(s, 5, '*')
+        return s
+    if n == 3:
+        s = replace(s, 2, ':')
+        s = replace(s, 5, ':')
+        return s
+    if n == 4:
+        s = replace(s, 2, ':')
+        s = replace(s, 5, '*')
+        return s
+    if n == 5:
+        s = replace(s, 2, ':')
+        s = replace(s, 5, ' ')
+        return s
+    if n == 6:
+        s = replace(s, 2, '*')
+        s = replace(s, 5, ' ')
+        return s
+    if n == 7:
+        s = replace(s, 2, '.')
+        s = replace(s, 5, ' ')
+        return s
+    if n == 8:
+        s = replace(s, 2, ' ')
+        s = replace(s, 5, ' ')
+        return s
     return s
 
 sys.path.insert(0, '..')
@@ -57,7 +92,7 @@ while True:
     if last == t:
         continue
 
-    breath = int(datetime.datetime.now().strftime('%s')) % 9    
+    breath = int(datetime.datetime.now().strftime('%s'))
     device.invert(aboutOpen(t) or aboutClose(t))
     #device.brightness(int(t[-1])) # experimenting
     if onTheMinute(t):
