@@ -73,7 +73,7 @@ def breathing(s, b):
         s = replace(s, 5, ' ')
         return s
     if n == 8:
-        s = replace(s, 2, '.') #__
+        s = replace(s, 2, ' ') #__
         s = replace(s, 5, ' ')
         return s
     return s
