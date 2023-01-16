@@ -24,7 +24,7 @@ def replace(s, i, c):
     return s[0:i] + c + s[i + 1:]
 
 def isNight(t):
-    return t >= '22:00:00' or t <= '07:00:00'
+    return t >= '20:00:00' or t <= '07:00:00'
 
 def aboutOpen(t):
     return t >= '09:29:50' and t <= '09:30:00'
